@@ -5,5 +5,9 @@ package ca.carleton.pvz;
  * 
  */
 public class PlantsVZombies {
+	private World gameWorld;
 	
+	public World getWorld() {
+		return gameWorld;
+	}
 }
