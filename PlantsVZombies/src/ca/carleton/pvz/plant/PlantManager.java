@@ -1,9 +1,5 @@
 package ca.carleton.pvz.plant;
 
-import java.awt.Point;
-
-import ca.carleton.pvz.PlantsVZombies;
-import ca.carleton.pvz.World;
 
 /**
  * Handles creation, placement, of new Plant objects. 
@@ -18,7 +14,4 @@ public class PlantManager {
 		
 	}
 	
-	public void placePlant(Point position) {
-		//PlantsVZombies.getWorld().getCurrentLevel().getDimension();
-	}
 }
