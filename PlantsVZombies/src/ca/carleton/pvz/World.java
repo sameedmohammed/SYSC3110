@@ -9,19 +9,18 @@ public class World {
 	private ArrayList<Level> levels;
 	private Level currentLevel;
 	
-	public World(int numLevels) {
+	public World() {
 		levels = new ArrayList<Level>();
-		addLevelsToWorld(numLevels);
 	}
 	
 	/**
 	 * Initialize levels ArrayList with level objects.
 	 * @param numLevels number of levels for the current world to have
 	 */
-	private void addLevelsToWorld(int numLevels) {
-		if(numLevels < 1) throw new IllegalArgumentException("World must have at least one level");
-		
-		if(numLevels < 2) levels.add(new LevelOne());
+	public void addLevelToWorld(Level level) {
+		if(level != null) {
+			levels.add(level);
+		}
 	}
 	
 	/**
@@ -31,5 +30,5 @@ public class World {
 	public Level getCurrentLevel() {
 		return currentLevel;
 	}
-	
+	 
 }
