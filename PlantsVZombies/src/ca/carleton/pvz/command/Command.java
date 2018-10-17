@@ -1,8 +1,10 @@
 package ca.carleton.pvz.command;
 
 public class Command {
-	 private String commandWord;
-	    private String secondWord;
+	 	private String commandWord;
+	 	private String secondWord;
+	 	private String thirdWord;
+	 	private String fourthWord;
 
 	    /**
 	     * Create a command object. First and second word must be supplied, but
@@ -10,10 +12,12 @@ public class Command {
 	     * @param firstWord The first word of the command. Null if the command was not recognised        
 	     * @param secondWord The second word of the command
 	     */
-	    public Command(String firstWord, String secondWord)
+	    public Command(String firstWord, String secondWord, String thirdWord, String fourthWord)
 	    {
 	        commandWord = firstWord;
 	        this.secondWord = secondWord;
+	        this.thirdWord = thirdWord;
+	        this.fourthWord = fourthWord;
 	    }
 
 	    /**
@@ -35,6 +39,16 @@ public class Command {
 	    {
 	        return secondWord;
 	    }
+	    
+	    public String getThirdWord()
+	    {
+	        return thirdWord;
+	    }
+	    
+	    public String getFourthWord()
+	    {
+	        return fourthWord;
+	    }
 
 	    /**
 	     * Returns true if the command is unknown.
@@ -52,5 +66,15 @@ public class Command {
 	    public boolean hasSecondWord()
 	    {
 	        return (secondWord != null);
+	    }
+	    
+	    public boolean hasThirdWord()
+	    {
+	        return (thirdWord != null);
+	    }
+	    
+	    public boolean hasFourthWord()
+	    {
+	        return (fourthWord != null);
 	    }
 }
