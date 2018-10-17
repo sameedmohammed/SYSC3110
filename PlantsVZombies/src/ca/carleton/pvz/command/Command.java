@@ -67,4 +67,14 @@ public class Command {
 	    {
 	        return (secondWord != null);
 	    }
+	    
+	    public boolean hasThirdWord()
+	    {
+	        return (thirdWord != null);
+	    }
+	    
+	    public boolean hasFourthWord()
+	    {
+	        return (fourthWord != null);
+	    }
 }
