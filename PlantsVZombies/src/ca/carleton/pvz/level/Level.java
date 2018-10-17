@@ -34,4 +34,20 @@ public class Level {
 	public Dimension getDimension() {
 		return dimension;
 	}
+	
+	public String toString() {
+		String s = "";
+		for(int row = 0; row < dimension.height; row++)  {
+			s += "| ";
+			for(int col = 0; col < dimension.width; col++) {
+				if(grass[col][row] != null) {
+					s += grass[col][row].toString() + " | ";
+				} else {
+					s += "  | ";
+				}
+			}
+			s += "\n";
+		}
+		return s;
+	}
 }

@@ -1,16 +1,18 @@
 package ca.carleton.pvz;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.level.LevelOne;
 
 public class World {
-	private ArrayList<Level> levels;
+	private Stack<Level> levels;
 	private Level currentLevel;
 	
 	public World() {
-		levels = new ArrayList<Level>();
+		levels = new Stack<Level>();
+		addLevelToWorld(new LevelOne());
+		currentLevel = levels.pop();
 	}
 	
 	/**
