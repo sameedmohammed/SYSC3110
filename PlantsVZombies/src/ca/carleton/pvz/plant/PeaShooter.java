@@ -1,5 +1,16 @@
 package ca.carleton.pvz.plant;
 
-public class PeaShooter {
+import java.awt.Point;
+
+public class PeaShooter extends Plant {
+
+	public PeaShooter() {
+		
+		
+	}
+	
+	public String toString() {
+		return "🌱";
+	}
 
 }
