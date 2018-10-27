@@ -2,7 +2,11 @@ package ca.carleton.pvz.command;
 
 import java.util.Scanner;
 
+/**
+ * Parses user input at the prompt.
+ */
 public class Parser {
+	
 	private static CommandWords commands = new CommandWords();  
     private Scanner reader;         
 	
