@@ -3,7 +3,7 @@ package ca.carleton.pvz.command;
 import java.util.Scanner;
 
 public class Parser {
-	private static CommandWords commands = new CommandWords();;  
+	private static CommandWords commands = new CommandWords();  
     private Scanner reader;         
 	
     /**
@@ -17,7 +17,7 @@ public class Parser {
     /**
      * Get the command from the user.
      * 
-     * @return The next command from the user
+     * @return The next command from the user.
      */
     public Command getCommand() 
     {
@@ -45,6 +45,7 @@ public class Parser {
                 }
             }
         }
+        tokenizer.close();
 
         // Now check whether this word is known. If so, create a command
         // with it. If not, create a "null" command (for unknown command).
