@@ -3,7 +3,7 @@ package ca.carleton.pvz.command;
 import java.util.Scanner;
 
 public class Parser {
-	private static CommandWords commands = new CommandWords(); 
+	private static CommandWords commands = new CommandWords();;  
     private Scanner reader;         
 	
     /**
