@@ -2,7 +2,7 @@ package ca.carleton.pvz.command;
 
 public class CommandWords {
 	// a constant array that holds all valid command words
-    private static final String[] validCommands = { "quit", "help", "place" };
+    private static final String[] validCommands = { "quit", "help", "place", "next", "restart" };
     
     /**
      * Constructor - initialise the command words.

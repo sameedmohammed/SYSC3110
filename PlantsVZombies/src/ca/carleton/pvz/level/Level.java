@@ -9,26 +9,28 @@ import ca.carleton.pvz.plant.PlantManager;
 public class Level {
 	private String levelName;
 	private Dimension dimension;
-	private Plant[][] grass;
+	protected Object[][] grass;
 	private PlantManager plantManager;
 	
 	public Level(String name, int width, int height) {
 		levelName = name;
 		dimension = new Dimension(width, height);
-		grass = new Plant[width][height];
+		grass = new Object[width][height];
 		plantManager = new PlantManager();
 		
-		for(Plant[] pArray : grass) {
-			for(Plant p : pArray) {
+		for(Object[] pArray : grass) {
+			for(Object p : pArray) {
 				p = null;
 			}
-		}
-		
-		
+		}	
 	}
 	
-	public void placePlant(Plant plant, Point p) {
-		grass[p.x][p.y] = plant;
+	public Object returnObject(int x, int y) {
+        return grass[x][y];
+    }
+	
+	public void place(Object o, Point p) {
+		grass[p.x][p.y] = o;
 	}
 	
 	public Dimension getDimension() {
