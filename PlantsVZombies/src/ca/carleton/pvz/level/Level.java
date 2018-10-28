@@ -45,7 +45,12 @@ public abstract class Level {
 	 * @return The cell located at the given coordinates.
 	 */
 	public Object getCell(int x, int y) {
-		return grid[x][y];
+		if(x < levelDimension.width && x >= 0) {
+			if(y < levelDimension.height && y >= 0) {
+				return grid[x][y];
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -54,7 +59,7 @@ public abstract class Level {
 	 * @param o A plant or zombie object to be placed.
 	 * @param p The point at which to place the given object.
 	 */
-	public void placePlant(Object o, Point p) {
+	public void placeActor(Object o, Point p) {
 		grid[p.x][p.y] = o;
 	}
 
