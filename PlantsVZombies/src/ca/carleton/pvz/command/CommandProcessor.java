@@ -134,7 +134,7 @@ public class CommandProcessor {
 	}
 
 	/**
-	 * Advances to the next game state (turn) in accordance with the current state.
+	 * Advances the game to the next state (turn) based on the current state.
 	 *
 	 * @param command The given command.
 	 */
@@ -356,7 +356,7 @@ public class CommandProcessor {
 	/**
 	 * Processes the placement of a plant.
 	 *
-	 * @param The given command.
+	 * @param command The given command.
 	 */
 	private void processPlace(Command command) {
 
