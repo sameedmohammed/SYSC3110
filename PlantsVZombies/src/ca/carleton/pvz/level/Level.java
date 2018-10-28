@@ -45,10 +45,8 @@ public abstract class Level {
 	 * @return The cell located at the given coordinates.
 	 */
 	public Object getCell(int x, int y) {
-		if(x < levelDimension.width && x >= 0) {
-			if(y < levelDimension.height && y >= 0) {
-				return grid[x][y];
-			}
+		if(isPointValid(new Point(x, y))) {
+			return grid[x][y];
 		}
 		return null;
 	}
@@ -60,7 +58,9 @@ public abstract class Level {
 	 * @param p The point at which to place the given object.
 	 */
 	public void placeActor(Object o, Point p) {
-		grid[p.x][p.y] = o;
+		if(isPointValid(p)) {
+			grid[p.x][p.y] = o;
+		}
 	}
 
 	/**
@@ -80,7 +80,16 @@ public abstract class Level {
 	public String getLevelName() {
 		return levelName;
 	}
-
+	
+	/**
+	 * Check if point is a valid position on level
+	 * @param p
+	 * @return Returns true if valid, false otherwise
+	 */
+	public boolean isPointValid(Point p) {
+		return (p.x < levelDimension.width && p.x > 0 && p.y < levelDimension.height && p.y > 0);
+	}
+	
 	/**
 	 * Returns the game grid as a String.
 	 * 

@@ -381,7 +381,11 @@ public class CommandProcessor {
 
 		int xPos = Integer.parseInt(command.getThirdWord());
 		int yPos = Integer.parseInt(command.getFourthWord());
-
+		
+		if(!gameWorld.getCurrentLevel().isPointValid(new Point(xPos, yPos))) {
+			return;
+		}
+		
 		Object o = gameWorld.getCurrentLevel().getCell(xPos, yPos);
 		if (o instanceof Zombie) {
 			print("You cannot place anything on top of a zombie!");
