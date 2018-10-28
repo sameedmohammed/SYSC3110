@@ -4,8 +4,6 @@ import java.awt.Point;
 import java.util.Random;
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.World;
-import ca.carleton.pvz.command.Parser;
-import ca.carleton.pvz.command.Presets;
 import ca.carleton.pvz.plant.PeaShooter;
 import ca.carleton.pvz.plant.Sunflower;
 import ca.carleton.pvz.zombie.Zombie;
@@ -32,7 +30,7 @@ public class CommandProcessor {
 
 	/**
 	 * Constructs a CommandProcessor for game state advancement.
-	 * 
+	 *
 	 * @param gameWorld The stack of levels to be played.
 	 */
 	public CommandProcessor(World gameWorld) {
@@ -53,7 +51,7 @@ public class CommandProcessor {
 
 	/**
 	 * Prompts for user input via the parser, then processes the input.
-	 * 
+	 *
 	 * @return true if the user wants to quit playing, false otherwise.
 	 */
 	public boolean processCommand() {
@@ -68,28 +66,31 @@ public class CommandProcessor {
 
 		String commandWord = command.getCommandWord();
 
-		if (commandWord.equals("help")) {
+		switch (commandWord) {
+		case "help":
 			if (command.hasSecondWord()) {
 				processHelp(command);
 			} else {
 				print(Presets.HELP);
 			}
-
-		} else if (commandWord.equals("place")) {
+			break;
+		case "place":
 			processPlace(command);
-
-		} else if (commandWord.equals("quit")) {
+			break;
+		case "quit":
 			System.exit(0);
-
-		} else if (commandWord.equals("next")) {
+		case "next":
 			processNext(command);
-
-		} else if (commandWord.equals("restart")) {
+			break;
+		case "restart":
 			if (command.hasSecondWord()) {
 				print(Presets.INVALID);
 			} else {
 				new PlantsVZombies();
 			}
+			break;
+		default:
+			break;
 		}
 
 		return wantToQuit;
@@ -98,27 +99,31 @@ public class CommandProcessor {
 
 	/**
 	 * Tells the user how to use the valid commands.
-	 * 
+	 *
 	 * @param command The given command.
 	 */
 	private void processHelp(Command command) {
 
 		if (!command.hasThirdWord()) {
 
-			if (command.getSecondWord().equals("quit")) {
+			switch (command.getSecondWord()) {
+			case "quit":
 				print("Quits the game (terminates the app).\n");
-
-			} else if (command.getSecondWord().equals("place")) {
-				print("Places the specified type of plant at the specified coordinates. Takes three args in the format:\n\"place <plant type> <x-coordinate> <y-coordinate>\"\n");
-
-			} else if (command.getSecondWord().equals("next")) {
-				print("Type \"next turn\" to advance the game to the next turn, or \"next wave\" to bring on the next wave of zombies.\n");
-
-			} else if (command.getSecondWord().equals("restart")) {
+				break;
+			case "place":
+				print("Places the specified type of plant at the specified coordinates. Takes three args in the format:"
+						+ "\n\"place <plant type> <x-coordinate> <y-coordinate>\"\n");
+				break;
+			case "next":
+				print("Type \"next turn\" to advance the game to the next turn,"
+						+ "or \"next wave\" to bring on the next wave of zombies.\n");
+				break;
+			case "restart":
 				print("Starts a new game.\n");
-
-			} else {
+				break;
+			default:
 				print(Presets.INVALID);
+				break;
 			}
 
 		} else {
@@ -130,14 +135,14 @@ public class CommandProcessor {
 
 	/**
 	 * Advances to the next game state (turn) in accordance with the current state.
-	 * 
+	 *
 	 * @param command The given command.
 	 */
 	private void processNext(Command command) {
 
 		if (!command.hasSecondWord()) {
-			print("Next what? (\"next\" should be followed by \"turn\" to advance to the next game state,\nor \"wave\" to bring on the next wave of zombies.)\n");
-			return;
+			print("Next what? (\"next\" should be followed by \"turn\" to advance to the next game state,"
+					+ "\nor \"wave\" to bring on the next wave of zombies.)\n");
 
 		} else if (command.getSecondWord().equals("turn")) {
 			++turn;
@@ -305,7 +310,6 @@ public class CommandProcessor {
 			}
 			print("You currently have " + sunPoints + " sun points.");
 			print(gameWorld.getCurrentLevel().toString());
-			return;
 
 		} else if (command.getSecondWord().equals("wave")) {
 
@@ -314,7 +318,6 @@ public class CommandProcessor {
 				print("Game over! You failed to protect your home from the zombies :(");
 				print("Please type \"restart\" if you wish to try again.");
 				gameOver = true;
-				return;
 
 			} else {
 
@@ -339,14 +342,11 @@ public class CommandProcessor {
 				if (waveNumber >= 3 && waveDefeated) {
 					print("Congrats! You finished the first level of Plants vs. Zombies.");
 					print("Please type 'restart' if you wish to play again.");
-					return;
 
 				} else {
 					print("You haven't killed the current wave of zombies!");
 				}
 			}
-
-			return;
 
 		} else {
 			print("Invalid command \n" + "Type 'help' if you need help.");
@@ -355,7 +355,7 @@ public class CommandProcessor {
 
 	/**
 	 * Processes the placement of a plant.
-	 * 
+	 *
 	 * @param The given command.
 	 */
 	private void processPlace(Command command) {
@@ -392,12 +392,8 @@ public class CommandProcessor {
 
 			if (peaShooterOnCooldown) {
 				print("Peashooter cooldown in effect."); // include number of turns left
-				return;
-			}
-
-			else if (sunPoints - 100 < 0) {
+			} else if (sunPoints - 100 < 0) {
 				print("You do not have enough sun points to purchase the peashooter.");
-				return;
 
 			} else {
 				PeaShooter plantToPlace;
@@ -414,12 +410,8 @@ public class CommandProcessor {
 
 			if (sunflowerOnCooldown) {
 				print("Sunflower cooldown in effect."); // include number of turns left
-				return;
-			}
-
-			else if (sunPoints - 50 < 0) {
+			} else if (sunPoints - 50 < 0) {
 				print("You do not have enough sun points to purchase the sunflower.");
-				return;
 
 			} else {
 				Sunflower plantToPlace = new Sunflower();
@@ -434,13 +426,12 @@ public class CommandProcessor {
 
 		} else {
 			print("Invalid plant type.");
-			return;
 		}
 	}
 
 	/**
 	 * Shorthand for printing to the terminal.
-	 * 
+	 *
 	 * @param s The String to be printed.
 	 */
 	public void print(String s) {
