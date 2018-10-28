@@ -2,8 +2,6 @@ package ca.carleton.pvz.level;
 
 import java.awt.Dimension;
 import java.awt.Point;
-
-import ca.carleton.pvz.plant.Plant;
 import ca.carleton.pvz.plant.PlantManager;
 
 public class Level {
