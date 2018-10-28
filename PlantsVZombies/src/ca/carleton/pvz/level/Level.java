@@ -13,7 +13,7 @@ public abstract class Level {
 	private String levelName;
 	private Dimension levelDimension;
 	protected Object[][] grid; // the grid in which one can place plants
-	private PlantManager plantManager;
+	private PlantManager plantManager; // will be utilized in future iterations
 
 	/**
 	 * Initializes the fields of a level object.
@@ -65,6 +65,15 @@ public abstract class Level {
 	 */
 	public Dimension getDimension() {
 		return levelDimension;
+	}
+	
+	/**
+	 * Gets this level's name.
+	 * 
+	 * @return This level's name.
+	 */
+	public String getLevelName() {
+		return levelName;
 	}
 
 	/**
