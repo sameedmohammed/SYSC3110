@@ -1,21 +1,48 @@
 package ca.carleton.pvz.zombie;
 
+/**
+ * Stores a wave of zombies.
+ *
+ */
 public class Wave {
+
 	private Zombie[] zombies;
-	private int numZombies;
 	private int remainingZombies;
-	
-	public Wave(int numZombies) {
-		zombies = new Zombie[numZombies];
-		this.numZombies = numZombies;
-		this.remainingZombies = numZombies;
+	private int waveNumber;
+
+	/**
+	 * Creates a new wave comprising the specified number of zombies.
+	 * 
+	 * @param waveNumber This wave's sequence number.
+	 * @param numZombies The number of zombies initially comprising this wave.
+	 */
+	public Wave(int waveNumber, int numZombies) {
 		
-		for(int i = 0; i < numZombies; i++) {
+		this.waveNumber = waveNumber;
+		zombies = new Zombie[numZombies];
+		remainingZombies = numZombies;
+
+		// initialize the array entries with Zombie objects
+		for (int i = 0; i < numZombies; ++i) {
 			zombies[i] = new Zombie();
 		}
 	}
-	
+
+	/**
+	 * Gets the number of zombies remaining from this wave.
+	 * 
+	 * @return The number of zombies remaining from this wave.
+	 */
 	public int getRemainingZombies() {
 		return remainingZombies;
+	}
+	
+	/**
+	 * Gets this wave's number.
+	 * 
+	 * @return This wave's number.
+	 */
+	public int getWaveNumber() {
+		return waveNumber;
 	}
 }

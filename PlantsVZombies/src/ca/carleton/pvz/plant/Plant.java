@@ -1,11 +1,8 @@
 package ca.carleton.pvz.plant;
 
-import java.awt.Point;
-
-public abstract class Plant {
-	
-	public Plant() {
-
-	}
-
-}
+/**
+ * The parent class from which different plant species inherit.
+ * (Not yet implemented, but leaving here for future iterations.)
+ *
+ */
+public class Plant {}

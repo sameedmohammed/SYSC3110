@@ -3,34 +3,40 @@ package ca.carleton.pvz;
 import java.util.Stack;
 
 import ca.carleton.pvz.level.Level;
-import ca.carleton.pvz.level.LevelOne;
 
+/**
+ * A class to store the levels in the game.
+ *
+ */
 public class World {
+
 	private Stack<Level> levels;
-	private Level currentLevel;
-	
-	public World() {
-		levels = new Stack<Level>();
-		addLevelToWorld(new LevelOne());
-		currentLevel = levels.pop();
-	}
-	
+
 	/**
-	 * Initialize levels ArrayList with level objects.
-	 * @param numLevels number of levels for the current world to have
+	 * Constructs a new game world.
 	 */
-	public void addLevelToWorld(Level level) {
-		if(level != null) {
+	public World() {
+		levels = new Stack<>();
+	}
+
+	/**
+	 * Adds a level to the stack.
+	 * 
+	 * @param level The level to be added to the stack.
+	 */
+	public void addLevel(Level level) {
+		if (level != null) {
 			levels.add(level);
 		}
 	}
-	
+
 	/**
-	 * Get the currently active level
-	 * @return
+	 * Get the current level.
+	 * 
+	 * @return The current level.
 	 */
 	public Level getCurrentLevel() {
-		return currentLevel;
+		return levels.peek();
 	}
-	 
+	
 }
