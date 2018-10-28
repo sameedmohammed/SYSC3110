@@ -12,18 +12,18 @@ public abstract class Level {
 
 	private String levelName;
 	private Dimension levelDimension;
-	protected Object[][] grid;	// the grid in which one can place plants
+	protected Object[][] grid; // the grid in which one can place plants
 	private PlantManager plantManager;
 
 	/**
 	 * Initializes the fields of a level object.
 	 * 
 	 * @param levelName The name of the level.
-	 * @param width The width (number of horizontal cells) of the level.
-	 * @param height The height (number of vertical cells) of the level.
+	 * @param width     The width (number of horizontal cells) of the level.
+	 * @param height    The height (number of vertical cells) of the level.
 	 */
 	public Level(String levelName, int width, int height) {
-		
+
 		this.levelName = levelName;
 		levelDimension = new Dimension(width, height);
 		grid = new Object[width][height];
@@ -31,7 +31,7 @@ public abstract class Level {
 
 		// initialize grid (playable area)
 		for (Object[] row : grid) {
-			for (Object cell : row) {	
+			for (Object cell : row) {
 				cell = null;
 			}
 		}
@@ -39,6 +39,7 @@ public abstract class Level {
 
 	/**
 	 * Get the cell located at the given coordinates.
+	 * 
 	 * @param x The x-coordinate (column number).
 	 * @param y The y-coordinate (row number).
 	 * @return The cell located at the given coordinates.
@@ -49,6 +50,7 @@ public abstract class Level {
 
 	/**
 	 * Place a plant or zombie at the given point.
+	 * 
 	 * @param o A plant or zombie object to be placed.
 	 * @param p The point at which to place the given object.
 	 */
@@ -56,10 +58,21 @@ public abstract class Level {
 		grid[p.x][p.y] = o;
 	}
 
+	/**
+	 * Returns the Dimension object comprising the width and height of the grid.
+	 * 
+	 * @return The Dimension object comprising the width and height of the grid.
+	 */
 	public Dimension getDimension() {
 		return levelDimension;
 	}
 
+	/**
+	 * Returns the game grid as a String.
+	 * 
+	 * @return The game grid as a String.
+	 */
+	@Override
 	public String toString() {
 		String s = "";
 		for (int row = 0; row < levelDimension.height; ++row) {

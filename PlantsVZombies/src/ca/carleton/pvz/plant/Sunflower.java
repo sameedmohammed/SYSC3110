@@ -4,11 +4,9 @@ public class Sunflower extends Plant {
 	
 	private int tick_time;
 
-	public Sunflower() {
-		
+	public Sunflower() {}
 		
 
-	}
 	
 	public void placed_tick(int i) {
 		

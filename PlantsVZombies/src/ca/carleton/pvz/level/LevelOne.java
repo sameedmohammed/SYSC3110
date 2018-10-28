@@ -18,6 +18,7 @@ public class LevelOne extends Level {
 	 * 
 	 * @return A String representing the level.
 	 */
+	@Override
 	public String toString() {
 		return "Level 1";
 	}

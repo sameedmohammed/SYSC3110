@@ -12,6 +12,6 @@ public final class Presets {
 	public static final String INVALID = "You entered an invalid command. Type \"help\" for valid commands.\n";
 
 	public static final String HELP = "Your valid command words are:\n" + Parser.getCommands()
-			+ "\n(You can type \"help\" followed by a valid command to learn how to use the command.)\n";
+			+ "\n(You can type \"help\" followed by a valid command (other than \"help\") to learn how to use the command.)\n";
 
 }

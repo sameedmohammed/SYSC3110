@@ -36,7 +36,7 @@ public class PlantsVZombies {
 	}
 
 	/**
-	 * A shorthand for print statements.
+	 * Shorthand for printing to the terminal.
 	 * 
 	 * @param s The String to be printed.
 	 */
