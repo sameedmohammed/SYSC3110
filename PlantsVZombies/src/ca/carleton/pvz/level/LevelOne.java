@@ -14,12 +14,12 @@ public class LevelOne extends Level {
 	}
 
 	/**
-	 * Returns the level label.
+	 * Returns this level's label.
 	 * 
-	 * @return A String representing the level.
+	 * @return A String representing this level.
 	 */
 	@Override
 	public String toString() {
-		return "Level 1";
+		return getLevelName() + "\nYou start out with 500 sun points!\n";
 	}
 }
