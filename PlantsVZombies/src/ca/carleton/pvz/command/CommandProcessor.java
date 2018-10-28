@@ -210,7 +210,7 @@ public class CommandProcessor {
 
 										((PeaShooter) o).addHit();
 										if (((Zombie) o1).getHealth() <= 0) {
-											gameWorld.getCurrentLevel().placePlant(null, new Point(index, j));
+											gameWorld.getCurrentLevel().placeActor(null, new Point(index, j));
 										}
 
 										// if zombie dies and peashooter isn't done shooting, progress to zombies to
@@ -227,7 +227,7 @@ public class CommandProcessor {
 														((Zombie) o2).setHealth(((Zombie) o2).getHealth() - 100);
 														((PeaShooter) o).addHit();
 														if (((Zombie) o2).getHealth() <= 0) {
-															gameWorld.getCurrentLevel().placePlant(null,
+															gameWorld.getCurrentLevel().placeActor(null,
 																	new Point(index, j));
 														}
 													}
@@ -250,8 +250,8 @@ public class CommandProcessor {
 
 						if (o instanceof Zombie) {
 							Object z1 = gameWorld.getCurrentLevel().getCell(i, j);
-							gameWorld.getCurrentLevel().placePlant(z1, new Point(i - 1, j));
-							gameWorld.getCurrentLevel().placePlant(null, new Point(i, j));
+							gameWorld.getCurrentLevel().placeActor(z1, new Point(i - 1, j));
+							gameWorld.getCurrentLevel().placeActor(null, new Point(i, j));
 						}
 					}
 				}
@@ -262,7 +262,7 @@ public class CommandProcessor {
 				Random random = new Random();
 				int tmp = random.nextInt(5);
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
+				gameWorld.getCurrentLevel().placeActor(z, new Point(4, tmp));
 				++numZombies;
 			}
 
@@ -271,7 +271,7 @@ public class CommandProcessor {
 				Random random = new Random();
 				int tmp = random.nextInt(5);
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
+				gameWorld.getCurrentLevel().placeActor(z, new Point(4, tmp));
 				++numZombies;
 			}
 
@@ -280,7 +280,7 @@ public class CommandProcessor {
 				Random random = new Random();
 				int tmp = random.nextInt(5);
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
+				gameWorld.getCurrentLevel().placeActor(z, new Point(4, tmp));
 				++numZombies;
 			}
 
@@ -398,7 +398,7 @@ public class CommandProcessor {
 			} else {
 				PeaShooter plantToPlace;
 				plantToPlace = new PeaShooter();
-				gameWorld.getCurrentLevel().placePlant(plantToPlace, new Point(xPos, yPos));
+				gameWorld.getCurrentLevel().placeActor(plantToPlace, new Point(xPos, yPos));
 				sunPoints -= 100;
 				peaShooterOnCooldown = true;
 				peaShooterCooldown = turn;
@@ -416,7 +416,7 @@ public class CommandProcessor {
 			} else {
 				Sunflower plantToPlace = new Sunflower();
 				plantToPlace.setTurnPlaced(turn);
-				gameWorld.getCurrentLevel().placePlant(plantToPlace, new Point(xPos, yPos));
+				gameWorld.getCurrentLevel().placeActor(plantToPlace, new Point(xPos, yPos));
 				sunPoints -= 50;
 				sunflowerOnCooldown = true;
 				sunflowerCooldown = turn;
