@@ -108,7 +108,7 @@ public class CommandProcessor {
 			return;
 		}
 
-		PlantsVZombies newGame = new PlantsVZombies();
+		new PlantsVZombies();
 
 	}
 
@@ -156,7 +156,7 @@ public class CommandProcessor {
 
 				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; i++) {
 					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
-						Object o = gameWorld.getCurrentLevel().returnObject(i, j);
+						Object o = gameWorld.getCurrentLevel().getCell(i, j);
 
 						if (o instanceof Sunflower) {
 							if ((turn - ((Sunflower) o).returnPlacedTickTime()) % 2 == 0) {
@@ -175,13 +175,13 @@ public class CommandProcessor {
 
 				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; i++) {
 					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
-						Object o = gameWorld.getCurrentLevel().returnObject(i, j);
+						Object o = gameWorld.getCurrentLevel().getCell(i, j);
 
 						if (o instanceof PeaShooter) { // if peashooter, shoot all zombies to right of peashooter
 							((PeaShooter) o).newTurn();
 							int i1 = i;
 							for (int index = i1; index < gameWorld.getCurrentLevel().getDimension().height; index++) {
-								Object o1 = gameWorld.getCurrentLevel().returnObject(index, j);
+								Object o1 = gameWorld.getCurrentLevel().getCell(index, j);
 
 								if (o1 instanceof Zombie) {
 
@@ -191,7 +191,7 @@ public class CommandProcessor {
 
 										((PeaShooter) o).addHit();
 										if (((Zombie) o1).getHealth() <= 0) {
-											gameWorld.getCurrentLevel().place(null, new Point(index, j));
+											gameWorld.getCurrentLevel().placePlant(null, new Point(index, j));
 										}
 
 										if (((Zombie) o1).getHealth() == 0 && ((PeaShooter) o).returnHits() < 4) { // if
@@ -210,7 +210,7 @@ public class CommandProcessor {
 																													// right
 											for (int i2 = i1 + 1; i2 < gameWorld.getCurrentLevel()
 													.getDimension().height; i2++) {
-												Object o2 = gameWorld.getCurrentLevel().returnObject(i2, j);
+												Object o2 = gameWorld.getCurrentLevel().getCell(i2, j);
 												if (o2 instanceof Zombie) {
 
 													while (((PeaShooter) o).returnHits() < 4) {
@@ -218,7 +218,7 @@ public class CommandProcessor {
 														((Zombie) o2).setHealth(((Zombie) o2).getHealth() - 100);
 														((PeaShooter) o).addHit();
 														if (((Zombie) o2).getHealth() <= 0) {
-															gameWorld.getCurrentLevel().place(null,
+															gameWorld.getCurrentLevel().placePlant(null,
 																	new Point(index, j));
 
 														}
@@ -244,12 +244,12 @@ public class CommandProcessor {
 				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; i++) {
 					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
 
-						Object o = gameWorld.getCurrentLevel().returnObject(i, j);
+						Object o = gameWorld.getCurrentLevel().getCell(i, j);
 
 						if (o instanceof Zombie) {
-							Object z1 = gameWorld.getCurrentLevel().returnObject(i, j);
-							gameWorld.getCurrentLevel().place(z1, new Point(i - 1, j));
-							gameWorld.getCurrentLevel().place(null, new Point(i, j));
+							Object z1 = gameWorld.getCurrentLevel().getCell(i, j);
+							gameWorld.getCurrentLevel().placePlant(z1, new Point(i - 1, j));
+							gameWorld.getCurrentLevel().placePlant(null, new Point(i, j));
 
 						}
 					}
@@ -264,7 +264,7 @@ public class CommandProcessor {
 				int tmp = random.nextInt(5);
 
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().place(z, new Point(4, tmp));
+				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
 				numZombies++;
 			}
 
@@ -275,7 +275,7 @@ public class CommandProcessor {
 				int tmp = random.nextInt(5);
 
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().place(z, new Point(4, tmp));
+				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
 				numZombies++;
 			}
 
@@ -286,7 +286,7 @@ public class CommandProcessor {
 				int tmp = random.nextInt(5);
 
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().place(z, new Point(4, tmp));
+				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
 				numZombies++;
 			}
 
@@ -294,7 +294,7 @@ public class CommandProcessor {
 
 				for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
 
-					Object o = gameWorld.getCurrentLevel().returnObject(0, j);
+					Object o = gameWorld.getCurrentLevel().getCell(0, j);
 
 					if (o instanceof Zombie) {
 						print(gameWorld.getCurrentLevel().toString());
@@ -313,7 +313,7 @@ public class CommandProcessor {
 				waveDefeated = true;
 				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; i++) {
 					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
-						Object o = gameWorld.getCurrentLevel().returnObject(i, j);
+						Object o = gameWorld.getCurrentLevel().getCell(i, j);
 						if (o instanceof Zombie) {
 
 							waveDefeated = false;
@@ -396,7 +396,7 @@ public class CommandProcessor {
 		int xPos = Integer.parseInt(command.getThirdWord());
 		int yPos = Integer.parseInt(command.getFourthWord());
 
-		Object o = gameWorld.getCurrentLevel().returnObject(xPos, yPos);
+		Object o = gameWorld.getCurrentLevel().getCell(xPos, yPos);
 		if (o instanceof Zombie) {
 			System.out.println("You cannot place anything on top of a zombie! ");
 			return;
@@ -416,7 +416,7 @@ public class CommandProcessor {
 			} else {
 				PeaShooter plantToPlace;
 				plantToPlace = new PeaShooter();
-				gameWorld.getCurrentLevel().place(plantToPlace, new Point(xPos, yPos));
+				gameWorld.getCurrentLevel().placePlant(plantToPlace, new Point(xPos, yPos));
 				sunPoints = sunPoints - 100;
 				peaShooterOnCooldown = true;
 				peaShooterCooldown = turn;
@@ -440,7 +440,7 @@ public class CommandProcessor {
 				Sunflower plantToPlace;
 				plantToPlace = new Sunflower();
 				plantToPlace.placed_tick(turn);
-				gameWorld.getCurrentLevel().place(plantToPlace, new Point(xPos, yPos));
+				gameWorld.getCurrentLevel().placePlant(plantToPlace, new Point(xPos, yPos));
 				sunPoints = sunPoints - 50;
 				sunflowerOnCooldown = true;
 				sunflowerCooldown = turn;

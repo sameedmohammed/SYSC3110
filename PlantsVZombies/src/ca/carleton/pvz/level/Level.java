@@ -4,44 +4,69 @@ import java.awt.Dimension;
 import java.awt.Point;
 import ca.carleton.pvz.plant.PlantManager;
 
-public class Level {
+/**
+ * An abstract class from which all the levels in the game inherit.
+ * 
+ */
+public abstract class Level {
+
 	private String levelName;
-	private Dimension dimension;
-	protected Object[][] grass;
+	private Dimension levelDimension;
+	protected Object[][] grid;	// the grid in which one can place plants
 	private PlantManager plantManager;
-	
-	public Level(String name, int width, int height) {
-		levelName = name;
-		dimension = new Dimension(width, height);
-		grass = new Object[width][height];
-		plantManager = new PlantManager();
+
+	/**
+	 * Initializes the fields of a level object.
+	 * 
+	 * @param levelName The name of the level.
+	 * @param width The width (number of horizontal cells) of the level.
+	 * @param height The height (number of vertical cells) of the level.
+	 */
+	public Level(String levelName, int width, int height) {
 		
-		for(Object[] pArray : grass) {
-			for(Object p : pArray) {
-				p = null;
+		this.levelName = levelName;
+		levelDimension = new Dimension(width, height);
+		grid = new Object[width][height];
+		plantManager = new PlantManager();
+
+		// initialize grid (playable area)
+		for (Object[] row : grid) {
+			for (Object cell : row) {	
+				cell = null;
 			}
-		}	
+		}
 	}
-	
-	public Object returnObject(int x, int y) {
-        return grass[x][y];
-    }
-	
-	public void place(Object o, Point p) {
-		grass[p.x][p.y] = o;
+
+	/**
+	 * Get the cell located at the given coordinates.
+	 * @param x The x-coordinate (column number).
+	 * @param y The y-coordinate (row number).
+	 * @return The cell located at the given coordinates.
+	 */
+	public Object getCell(int x, int y) {
+		return grid[x][y];
 	}
-	
+
+	/**
+	 * Place a plant or zombie at the given point.
+	 * @param o A plant or zombie object to be placed.
+	 * @param p The point at which to place the given object.
+	 */
+	public void placePlant(Object o, Point p) {
+		grid[p.x][p.y] = o;
+	}
+
 	public Dimension getDimension() {
-		return dimension;
+		return levelDimension;
 	}
-	
+
 	public String toString() {
 		String s = "";
-		for(int row = 0; row < dimension.height; row++)  {
+		for (int row = 0; row < levelDimension.height; ++row) {
 			s += "| ";
-			for(int col = 0; col < dimension.width; col++) {
-				if(grass[col][row] != null) {
-					s += grass[col][row].toString() + " | ";
+			for (int col = 0; col < levelDimension.width; ++col) {
+				if (grid[col][row] != null) {
+					s += grid[col][row] + " | ";
 				} else {
 					s += "  | ";
 				}

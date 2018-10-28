@@ -7,14 +7,14 @@ package ca.carleton.pvz.level;
 public class LevelOne extends Level {
 
 	/**
-	 * Constructs the first level.
+	 * Constructs level 1.
 	 */
 	public LevelOne() {
 		super("Level 1", 5, 5);
 	}
 
 	/**
-	 * Prints the level label.
+	 * Returns the level label.
 	 * 
 	 * @return A String representing the level.
 	 */
