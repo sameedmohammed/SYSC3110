@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * Parses prompted user input.
+ * 
  */
 public class Parser {
 

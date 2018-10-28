@@ -2,11 +2,12 @@ package ca.carleton.pvz.command;
 
 /**
  * A constant class for storing preset console outputs.
+ * 
  */
 public final class Presets {
 
 	public static final String WELCOME = "Welcome to Plants vs. Zombies (text-based)!\n"
-			+ "Type \"help\" if you need help.\n" + "You currently have 500 sunpoints.\n ";
+			+ "Type \"help\" if you need help.\n" + "You currently have 500 sun points.\n ";
 
 	public static final String INVALID = "You entered an invalid command. Type \"help\" for valid commands.\n";
 
