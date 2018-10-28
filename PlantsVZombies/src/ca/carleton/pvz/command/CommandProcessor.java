@@ -11,27 +11,33 @@ import ca.carleton.pvz.plant.Sunflower;
 import ca.carleton.pvz.zombie.Zombie;
 
 /**
- * Processes the user inputted command and advances the game accordingly.
+ * Processes the user-inputed command and advances the game accordingly.
  *
  */
 public class CommandProcessor {
 
 	private Parser parser;
 	private World gameWorld;
-	private int sunPoints;
+	private int sunPoints; // in-game currency spent on plants
 	private int turn;
 	private int previousTurn;
-	private int waveNumber;
+	private int waveNumber; // zombie wave number
 	private boolean peaShooterOnCooldown;
 	private boolean sunflowerOnCooldown;
 	private int peaShooterCooldown;
 	private int sunflowerCooldown;
-	private int numZombies;
+	private int numZombies; // number of zombies currently on the board
 	private boolean waveDefeated;
 	private boolean gameOver;
 
+	/**
+	 * Constructs a CommandProcessor for game state advancement.
+	 * 
+	 * @param gameWorld The stack of levels to be played.
+	 */
 	public CommandProcessor(World gameWorld) {
-
+		parser = new Parser();
+		this.gameWorld = gameWorld;
 		sunPoints = 500;
 		turn = 0;
 		previousTurn = 0;
@@ -43,13 +49,15 @@ public class CommandProcessor {
 		numZombies = 0;
 		gameOver = false;
 		waveDefeated = false;
-
-		parser = new Parser();
-		this.gameWorld = gameWorld;
-
 	}
 
+	/**
+	 * Prompts for user input via the parser, then processes the input.
+	 * 
+	 * @return true if the user wants to quit playing, false otherwise.
+	 */
 	public boolean processCommand() {
+
 		boolean wantToQuit = false;
 		Command command = parser.getCommand();
 
@@ -71,313 +79,287 @@ public class CommandProcessor {
 			processPlace(command);
 
 		} else if (commandWord.equals("quit")) {
-			System.exit(1);
-		}
+			System.exit(0);
 
-		else if (commandWord.equals("next")) {
+		} else if (commandWord.equals("next")) {
 			processNext(command);
 
+		} else if (commandWord.equals("restart")) {
+			if (command.hasSecondWord()) {
+				print(Presets.INVALID);
+			} else {
+				new PlantsVZombies();
+			}
 		}
 
-		else if (commandWord.equals("restart")) {
-			processRestart(command);
-
-		}
 		return wantToQuit;
+
 	}
 
+	/**
+	 * Tells the user how to use the valid commands.
+	 * 
+	 * @param command The given command.
+	 */
 	private void processHelp(Command command) {
-		String wholeWord = ("" + command.getCommandWord() + " " + command.getSecondWord() + "");
-		if (wholeWord.equals("help quit")) {
-			print("Using this command will quit the game.");
-		} else if (wholeWord.equals("help place")) {
-			print("Using this command places a plant in chosen location... ie. 'place [plant-type] [column coordinate] [row coordinate]");
-		} else if (wholeWord.equals("help next")) {
-			print("Using this command will advance the game to the next turn.");
-		} else if (!command.hasSecondWord()) {
-			print(Presets.HELP);
-		} else {
-			print(Presets.INVALID);
+
+		if (!command.hasThirdWord()) {
+
+			if (command.getSecondWord().equals("quit")) {
+				print("Quits the game (terminates the app).\n");
+
+			} else if (command.getSecondWord().equals("place")) {
+				print("Places the specified type of plant at the specified coordinates. Takes three arguments in the format:\n\"place <plant type> <x-coordinate> <y-coordinate>\"");
+
+			} else if (command.getSecondWord().equals("next")) {
+				print("Type \"next turn\" to advance the game to the next turn. (Be ready for more zombies!)");
+
+			} else if (command.getSecondWord().equals("restart")) {
+				print("Starts a new game.");
+
+			} else {
+				print(Presets.INVALID);
+			}
+
 		}
+
+		print(Presets.INVALID);
 	}
 
-	private void processRestart(Command command) {
-
-		if (command.hasSecondWord()) {
-			print(Presets.INVALID);
-			return;
-		}
-
-		PlantsVZombies newGame = new PlantsVZombies();
-
-	}
-
+	/**
+	 * Advances to the next game state (turn) in accordance with the current state.
+	 * 
+	 * @param command The given command.
+	 */
 	private void processNext(Command command) {
+
 		if (!command.hasSecondWord()) {
-			print("Next what? ");
+			print("Next what? (\"next\" should be followed by \"turn\" to advance to the next game state,\nor \"wave\" to bring on the next wave of zombies.)");
 			return;
+
 		} else if (command.getSecondWord().equals("turn")) {
-			turn++;
-			// Loop below searches if zombies have been eliminated, this is the absolute
-			// minimum turn number zombies can be killed per wave
+			++turn;
 
-			// Wave complete logic
-
-			if (waveNumber == 1 && waveDefeated == true) {
-				System.out.println("Wave complete! Type 'next wave' to progress to the next wave of Plants Vs Zombies");
+			// wave logic
+			if (waveNumber == 1 && waveDefeated) {
+				print("Wave complete! Type 'next wave' to progress to the next wave of Plants Vs Zombies");
 				return;
 			}
-			if (waveNumber == 2 && waveDefeated == true) {
-				System.out.println("Wave complete! Type 'next wave' to progress to the next wave of Plants Vs Zombies");
+			if (waveNumber == 2 && waveDefeated) {
+				print("Wave complete! Type 'next wave' to progress to the next wave of Plants Vs Zombies");
 				return;
 			}
 
-			if (waveNumber >= 3 && waveDefeated == true) {
-				System.out.println("Congrats! You finished the first level of Plants Vs Zombies");
-				System.out.println("Please type 'restart' if you wish to play again");
+			if (waveNumber >= 3 && waveDefeated) {
+				print("Congrats! You finished the first level of Plants Vs Zombies");
+				print("Please type 'restart' if you wish to play again");
 				return;
 
 			}
 
-			if (sunflowerOnCooldown == true && turn - sunflowerCooldown == 2) {
+			if (sunflowerOnCooldown && turn - sunflowerCooldown == 2) {
 				sunflowerOnCooldown = false;
 			}
 
-			if (peaShooterOnCooldown == true && turn - peaShooterCooldown == 2) {
+			if (peaShooterOnCooldown && turn - peaShooterCooldown == 2) {
 				peaShooterOnCooldown = false;
 			}
 
-			if (turn - previousTurn == 3) { // passive sun points logic, every 3 turns, increment sun points by 25;
+			if (turn - previousTurn == 3) { // passive sun points logic (every 3 turns, increase sun points by 25)
 				previousTurn = turn;
-				sunPoints = sunPoints + 25;
+				sunPoints += 25;
 			}
 
 			if (waveNumber >= 1) {
-
-				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; i++) {
-					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
-						Object o = gameWorld.getCurrentLevel().returnObject(i, j);
-
+				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; ++i) {
+					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; ++j) {
+						Object o = gameWorld.getCurrentLevel().getCell(i, j);
 						if (o instanceof Sunflower) {
-							if ((turn - ((Sunflower) o).returnPlacedTickTime()) % 2 == 0) {
-								sunPoints = sunPoints + 25;
+							if ((turn - ((Sunflower) o).getTurnPlaced()) % 2 == 0) {
+								sunPoints += 25;
 							}
-
 						}
-
 					}
-
 				}
-
 			}
 
 			if (turn > 3) { // shooting zombies
 
-				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; i++) {
-					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
-						Object o = gameWorld.getCurrentLevel().returnObject(i, j);
+				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; ++i) {
+					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; ++j) {
+						Object o = gameWorld.getCurrentLevel().getCell(i, j);
 
 						if (o instanceof PeaShooter) { // if peashooter, shoot all zombies to right of peashooter
 							((PeaShooter) o).newTurn();
 							int i1 = i;
-							for (int index = i1; index < gameWorld.getCurrentLevel().getDimension().height; index++) {
-								Object o1 = gameWorld.getCurrentLevel().returnObject(index, j);
+							for (int index = i1; index < gameWorld.getCurrentLevel().getDimension().height; ++index) {
+								Object o1 = gameWorld.getCurrentLevel().getCell(index, j);
 
 								if (o1 instanceof Zombie) {
 
-									while (((PeaShooter) o).returnHits() < 4) {
-										// while loop - zombie gets up to 4 times or health becomes zero
+									while (((PeaShooter) o).getHits() < 4) {
+										// while loop - zombie gets hit up to 4 times or health becomes zero
 										((Zombie) o1).setHealth(((Zombie) o1).getHealth() - 100);
 
 										((PeaShooter) o).addHit();
 										if (((Zombie) o1).getHealth() <= 0) {
-											gameWorld.getCurrentLevel().place(null, new Point(index, j));
+											gameWorld.getCurrentLevel().placePlant(null, new Point(index, j));
 										}
 
-										if (((Zombie) o1).getHealth() == 0 && ((PeaShooter) o).returnHits() < 4) { // if
-																													// zombie
-																													// dies
-																													// and
-																													// peashooter
-																													// isnt
-																													// done
-																													// shooting
-																													// peas,
-																													// progress
-																													// to
-																													// zombies
-																													// to
-																													// right
+										// if zombie dies and peashooter isn't done shooting, progress to zombies to right
+										if (((Zombie) o1).getHealth() == 0 && ((PeaShooter) o).getHits() < 4) {
 											for (int i2 = i1 + 1; i2 < gameWorld.getCurrentLevel()
-													.getDimension().height; i2++) {
-												Object o2 = gameWorld.getCurrentLevel().returnObject(i2, j);
+													.getDimension().height; ++i2) {
+												Object o2 = gameWorld.getCurrentLevel().getCell(i2, j);
 												if (o2 instanceof Zombie) {
 
-													while (((PeaShooter) o).returnHits() < 4) {
-														// while loop - zombie gets up to 4 times or health becomes zero
+													while (((PeaShooter) o).getHits() < 4) {
+														// while loop - zombie gets hit up to 4 times or health becomes zero
 														((Zombie) o2).setHealth(((Zombie) o2).getHealth() - 100);
 														((PeaShooter) o).addHit();
 														if (((Zombie) o2).getHealth() <= 0) {
-															gameWorld.getCurrentLevel().place(null,
+															gameWorld.getCurrentLevel().placePlant(null,
 																	new Point(index, j));
-
 														}
-
 													}
-
 												}
 											}
 										}
-
 									}
-
 								}
 							}
 						}
-
 					}
 				}
-
 			}
 
-			if (turn > 3) { // shifting already placed zombies 1 to left each turn
-				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; i++) {
-					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
+			if (turn > 3) { // shifting already-placed zombies one to the left each turn
+				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; ++i) {
+					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; ++j) {
 
-						Object o = gameWorld.getCurrentLevel().returnObject(i, j);
+						Object o = gameWorld.getCurrentLevel().getCell(i, j);
 
 						if (o instanceof Zombie) {
-							Object z1 = gameWorld.getCurrentLevel().returnObject(i, j);
-							gameWorld.getCurrentLevel().place(z1, new Point(i - 1, j));
-							gameWorld.getCurrentLevel().place(null, new Point(i, j));
-
+							Object z1 = gameWorld.getCurrentLevel().getCell(i, j);
+							gameWorld.getCurrentLevel().placePlant(z1, new Point(i - 1, j));
+							gameWorld.getCurrentLevel().placePlant(null, new Point(i, j));
 						}
 					}
 				}
-
 			}
 
-			if (waveNumber == 1 && turn >= 3 && numZombies < 3) { // zombies spawn after tick = 3 for first wave
+			if (waveNumber == 1 && turn >= 3 && numZombies < 3) { // zombies spawn after turn == 3 for first wave
 				print("Zombies are spawning!");
-
 				Random random = new Random();
 				int tmp = random.nextInt(5);
-
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().place(z, new Point(4, tmp));
-				numZombies++;
+				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
+				++numZombies;
 			}
 
-			if (waveNumber == 2 && turn >= 3 && numZombies < 5) { // zombies spawn after turn = 3 for first wave
+			if (waveNumber == 2 && turn >= 3 && numZombies < 5) { // zombies spawn after turn == 3 for first wave
 				print("Zombies are spawning!");
-
 				Random random = new Random();
 				int tmp = random.nextInt(5);
-
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().place(z, new Point(4, tmp));
-				numZombies++;
+				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
+				++numZombies;
 			}
 
-			if (waveNumber == 3 && turn >= 3 && numZombies < 7) { // zombies spawn after turn = 3 for first wave
+			if (waveNumber == 3 && turn >= 3 && numZombies < 7) { // zombies spawn after turn == 3 for first wave
 				print("Zombies are spawning!");
-
 				Random random = new Random();
 				int tmp = random.nextInt(5);
-
 				Zombie z = new Zombie();
-				gameWorld.getCurrentLevel().place(z, new Point(4, tmp));
-				numZombies++;
+				gameWorld.getCurrentLevel().placePlant(z, new Point(4, tmp));
+				++numZombies;
 			}
 
 			if (turn > 6) { // searching if any zombies made it to end game
-
-				for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
-
-					Object o = gameWorld.getCurrentLevel().returnObject(0, j);
-
+				for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; ++j) {
+					Object o = gameWorld.getCurrentLevel().getCell(0, j);
 					if (o instanceof Zombie) {
 						print(gameWorld.getCurrentLevel().toString());
-						System.out.println("Game over! You failed to protect your field from the zombies. :(");
-						System.out.println("Please type 'restart' if you wish to try again");
+						print("Game over! You failed to protect your home from the zombies :(");
+						print("Please type \"restart\" if you wish to try again.");
 						gameOver = true;
 						return;
-
 					}
-
 				}
-
 			}
 
-			if ((waveNumber == 1 && turn >= 6) || (waveNumber == 2 && turn >= 8) || (waveNumber == 3 && turn >= 10)) { //
+			if ((waveNumber == 1 && turn >= 6) || (waveNumber == 2 && turn >= 8) || (waveNumber == 3 && turn >= 10)) {
 				waveDefeated = true;
-				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; i++) {
-					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; j++) {
-						Object o = gameWorld.getCurrentLevel().returnObject(i, j);
+				for (int i = 0; i < gameWorld.getCurrentLevel().getDimension().height; ++i) {
+					for (int j = 0; j < gameWorld.getCurrentLevel().getDimension().width; ++j) {
+						Object o = gameWorld.getCurrentLevel().getCell(i, j);
 						if (o instanceof Zombie) {
-
 							waveDefeated = false;
-
 						}
-
 					}
 				}
-
 			}
-
-			System.out.println("You currently have " + sunPoints + " sun points");
-
+			print("You currently have " + sunPoints + " sun points.");
 			print(gameWorld.getCurrentLevel().toString());
 			return;
+
 		} else if (command.getSecondWord().equals("wave")) {
-			if (gameOver == true) {
+
+			if (gameOver) {
 				print(gameWorld.getCurrentLevel().toString());
-				System.out.println("Game over! You failed to protect your field from the zombies. :(");
-				System.out.println("Please type 'restart' if you wish to try again");
+				print("Game over! You failed to protect your home from the zombies :(");
+				print("Please type \"restart\" if you wish to try again.");
 				gameOver = true;
 				return;
+
 			} else {
-				if (waveNumber == 1 && waveDefeated == true) {
+
+				if (waveNumber == 1 && waveDefeated) {
 					waveDefeated = false;
 					numZombies = 0;
 					turn = 0;
 					waveNumber = 2;
-					System.out.println("Wave 2 will be commencing shortly");
+					print("Wave 2 will arrive shortly.");
 					return;
 				}
-				if (waveNumber == 2 && waveDefeated == true) {
+
+				if (waveNumber == 2 && waveDefeated) {
 					waveDefeated = false;
 					numZombies = 0;
 					turn = 0;
 					waveNumber = 3;
-					System.out.println("Wave 3 will be commencing shortly");
+					print("Wave 3 will arrive shortly.");
 					return;
 				}
 
-				if (waveNumber >= 3 && waveDefeated == true) {
-					System.out.println("Congrats! You finished the first level of Plants Vs Zombies");
-					System.out.println("Please type 'restart' if you wish to play again");
+				if (waveNumber >= 3 && waveDefeated) {
+					print("Congrats! You finished the first level of Plants vs. Zombies.");
+					print("Please type 'restart' if you wish to play again.");
 					return;
 
 				} else {
-
-					System.out.println("You haven't killed the current wave of zombies!");
+					print("You haven't killed the current wave of zombies!");
 				}
 			}
+
 			return;
+
 		} else {
 			print("Invalid command \n" + "Type 'help' if you need help.");
 		}
-
 	}
 
+	/**
+	 * Processes the placement of a plant.
+	 * 
+	 * @param The given command.
+	 */
 	private void processPlace(Command command) {
 
-		if (waveNumber >= 3 && waveDefeated == true) {
-			System.out.println("Congrats! You finished the first level of Plants Vs Zombies");
-			System.out.println("Please type 'restart' if you wish to play again");
+		if (waveNumber >= 3 && waveDefeated) {
+			print("Congrats! You finished the first level of Plants vs. Zombies");
+			print("Please type \"restart\" if you wish to play again.");
 			return;
-
 		}
 
 		if (!command.hasSecondWord()) {
@@ -396,69 +378,68 @@ public class CommandProcessor {
 		int xPos = Integer.parseInt(command.getThirdWord());
 		int yPos = Integer.parseInt(command.getFourthWord());
 
-		Object o = gameWorld.getCurrentLevel().returnObject(xPos, yPos);
+		Object o = gameWorld.getCurrentLevel().getCell(xPos, yPos);
 		if (o instanceof Zombie) {
-			System.out.println("You cannot place anything on top of a zombie! ");
+			print("You cannot place anything on top of a zombie!");
 			return;
-
 		}
 
 		if (plantType.equalsIgnoreCase("peashooter")) {
 
-			if (peaShooterOnCooldown == true) {
-				print("Peashooter cooldown in effect"); // Include number of turns left
+			if (peaShooterOnCooldown) {
+				print("Peashooter cooldown in effect."); // include number of turns left
 				return;
 			}
 
 			else if (sunPoints - 100 < 0) {
-				print("You do not have enough sun points to purchase the peashooter");
+				print("You do not have enough sun points to purchase the peashooter.");
 				return;
+
 			} else {
 				PeaShooter plantToPlace;
 				plantToPlace = new PeaShooter();
-				gameWorld.getCurrentLevel().place(plantToPlace, new Point(xPos, yPos));
-				sunPoints = sunPoints - 100;
+				gameWorld.getCurrentLevel().placePlant(plantToPlace, new Point(xPos, yPos));
+				sunPoints -= 100;
 				peaShooterOnCooldown = true;
 				peaShooterCooldown = turn;
-				System.out.println("You currently have " + sunPoints + " sun points");
+				print("You currently have " + sunPoints + " sun points.");
 				print(gameWorld.getCurrentLevel().toString());
-
 			}
 
 		} else if (plantType.equalsIgnoreCase("sunflower")) {
-			if (sunflowerOnCooldown == true) {
-				print("Sunflower cooldown in effect"); // Include number of turns left
-				return;
 
+			if (sunflowerOnCooldown) {
+				print("Sunflower cooldown in effect."); // include number of turns left
+				return;
 			}
 
 			else if (sunPoints - 50 < 0) {
-				print("You do not have enough sun points to purchase the sunflower");
+				print("You do not have enough sun points to purchase the sunflower.");
 				return;
 
 			} else {
-				Sunflower plantToPlace;
-				plantToPlace = new Sunflower();
-				plantToPlace.placed_tick(turn);
-				gameWorld.getCurrentLevel().place(plantToPlace, new Point(xPos, yPos));
-				sunPoints = sunPoints - 50;
+				Sunflower plantToPlace = new Sunflower();
+				plantToPlace.setTurnPlaced(turn);
+				gameWorld.getCurrentLevel().placePlant(plantToPlace, new Point(xPos, yPos));
+				sunPoints -= 50;
 				sunflowerOnCooldown = true;
 				sunflowerCooldown = turn;
-				System.out.println("You currently have " + sunPoints + " sun points");
+				print("You currently have " + sunPoints + " sun points.");
 				print(gameWorld.getCurrentLevel().toString());
-
 			}
 
 		} else {
-
 			print("Invalid plant type.");
 			return;
-
 		}
 	}
 
+	/**
+	 * Shorthand for printing to the terminal.
+	 * 
+	 * @param s The String to be printed.
+	 */
 	public void print(String s) {
 		System.out.println(s);
 	}
-
 }
