@@ -109,21 +109,23 @@ public class CommandProcessor {
 				print("Quits the game (terminates the app).\n");
 
 			} else if (command.getSecondWord().equals("place")) {
-				print("Places the specified type of plant at the specified coordinates. Takes three arguments in the format:\n\"place <plant type> <x-coordinate> <y-coordinate>\"");
+				print("Places the specified type of plant at the specified coordinates. Takes three args in the format:\n\"place <plant type> <x-coordinate> <y-coordinate>\"\n");
 
 			} else if (command.getSecondWord().equals("next")) {
-				print("Type \"next turn\" to advance the game to the next turn. (Be ready for more zombies!)");
+				print("Type \"next turn\" to advance the game to the next turn, or \"next wave\" to bring on the next wave of zombies.\n");
 
 			} else if (command.getSecondWord().equals("restart")) {
-				print("Starts a new game.");
+				print("Starts a new game.\n");
 
 			} else {
 				print(Presets.INVALID);
 			}
 
-		}
+		} else {
 
-		print(Presets.INVALID);
+			print(Presets.INVALID);
+
+		}
 	}
 
 	/**
@@ -134,7 +136,7 @@ public class CommandProcessor {
 	private void processNext(Command command) {
 
 		if (!command.hasSecondWord()) {
-			print("Next what? (\"next\" should be followed by \"turn\" to advance to the next game state,\nor \"wave\" to bring on the next wave of zombies.)");
+			print("Next what? (\"next\" should be followed by \"turn\" to advance to the next game state,\nor \"wave\" to bring on the next wave of zombies.)\n");
 			return;
 
 		} else if (command.getSecondWord().equals("turn")) {
@@ -142,11 +144,11 @@ public class CommandProcessor {
 
 			// wave logic
 			if (waveNumber == 1 && waveDefeated) {
-				print("Wave complete! Type 'next wave' to progress to the next wave of Plants Vs Zombies");
+				print("Wave complete! Type 'next wave' to progress to the next wave of zombies");
 				return;
 			}
 			if (waveNumber == 2 && waveDefeated) {
-				print("Wave complete! Type 'next wave' to progress to the next wave of Plants Vs Zombies");
+				print("Wave complete! Type 'next wave' to progress to the next wave of zombies");
 				return;
 			}
 
@@ -206,7 +208,8 @@ public class CommandProcessor {
 											gameWorld.getCurrentLevel().placePlant(null, new Point(index, j));
 										}
 
-										// if zombie dies and peashooter isn't done shooting, progress to zombies to right
+										// if zombie dies and peashooter isn't done shooting, progress to zombies to
+										// right
 										if (((Zombie) o1).getHealth() == 0 && ((PeaShooter) o).getHits() < 4) {
 											for (int i2 = i1 + 1; i2 < gameWorld.getCurrentLevel()
 													.getDimension().height; ++i2) {
@@ -214,7 +217,8 @@ public class CommandProcessor {
 												if (o2 instanceof Zombie) {
 
 													while (((PeaShooter) o).getHits() < 4) {
-														// while loop - zombie gets hit up to 4 times or health becomes zero
+														// while loop - zombie gets hit up to 4 times or health becomes
+														// zero
 														((Zombie) o2).setHealth(((Zombie) o2).getHealth() - 100);
 														((PeaShooter) o).addHit();
 														if (((Zombie) o2).getHealth() <= 0) {
