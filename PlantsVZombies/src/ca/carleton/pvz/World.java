@@ -12,15 +12,12 @@ import ca.carleton.pvz.level.LevelOne;
 public class World {
 
 	private Stack<Level> levels;
-	private Level currentLevel;
 
 	/**
 	 * Constructs a new game world.
 	 */
 	public World() {
 		levels = new Stack<Level>();
-		addLevelToWorld(new LevelOne()); // initialize stack with level 1
-		currentLevel = levels.pop();
 	}
 
 	/**
@@ -40,7 +37,7 @@ public class World {
 	 * @return The current level.
 	 */
 	public Level getCurrentLevel() {
-		return currentLevel;
+		return levels.peek();
 	}
 
 }
