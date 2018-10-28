@@ -7,7 +7,7 @@ package ca.carleton.pvz.command;
 public final class Presets {
 
 	public static final String WELCOME = "Welcome to Plants vs. Zombies (text-based)!\n"
-			+ "Type \"help\" if you need help.\n";
+			+ "Type \"help\" if you need help.\n\nLevel 1\nYou start out with 500 sun points!\n";
 
 	public static final String INVALID = "You entered an invalid command. Type \"help\" for valid commands.\n";
 

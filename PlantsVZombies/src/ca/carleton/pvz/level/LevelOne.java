@@ -7,19 +7,19 @@ package ca.carleton.pvz.level;
 public class LevelOne extends Level {
 
 	/**
-	 * Constructs level 1.
+	 * Constructs level 1 with the specified dimensions (5x5).
 	 */
 	public LevelOne() {
 		super("Level 1", 5, 5);
 	}
 
 	/**
-	 * Returns this level's label.
+	 * Returns this level's grid as a String.
 	 * 
-	 * @return A String representing this level.
+	 * @return This level's grid as a String.
 	 */
 	@Override
 	public String toString() {
-		return getLevelName() + "\nYou start out with 500 sun points!\n";
+		return super.toString();
 	}
 }
