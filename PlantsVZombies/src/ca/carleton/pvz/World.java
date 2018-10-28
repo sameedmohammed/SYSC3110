@@ -25,7 +25,7 @@ public class World {
 	 * 
 	 * @param level The level to be added to the stack.
 	 */
-	public void addLevelToWorld(Level level) {
+	public void addLevel(Level level) {
 		if (level != null) {
 			levels.add(level);
 		}
@@ -39,5 +39,5 @@ public class World {
 	public Level getCurrentLevel() {
 		return levels.peek();
 	}
-
+	
 }

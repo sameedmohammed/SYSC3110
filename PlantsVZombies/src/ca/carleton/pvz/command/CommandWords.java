@@ -12,8 +12,8 @@ public class CommandWords {
 	/**
 	 * Check whether a given String is a valid command word.
 	 * 
-	 * @param s The String to check
-	 * @return true if it is valid, false otherwise
+	 * @param s The String to check.
+	 * @return true if it is valid, false otherwise.
 	 */
 	public boolean isCommand(String s) {
 		for (int i = 0; i < validCommands.length; i++) {
@@ -27,7 +27,7 @@ public class CommandWords {
 	/**
 	 * Gets all valid commands.
 	 * 
-	 * @return Returns string of valid commands.
+	 * @return String of valid commands.
 	 */
 	public String getCommandList() {
 		String list = "";

@@ -2,7 +2,6 @@ package ca.carleton.pvz;
 
 import ca.carleton.pvz.command.CommandProcessor;
 import ca.carleton.pvz.command.Presets;
-
 import ca.carleton.pvz.level.LevelOne;
 
 /**
@@ -20,7 +19,7 @@ public class PlantsVZombies {
 	public PlantsVZombies() {
 		gameWorld = new World();
 		commandProcessor = new CommandProcessor(gameWorld);
-		gameWorld.addLevelToWorld(new LevelOne());
+		gameWorld.addLevel(new LevelOne());
 		playGame();
 	}
 

@@ -16,5 +16,4 @@ public class Application {
 		new PlantsVZombies(); // start a new game
 
 	}
-
 }
