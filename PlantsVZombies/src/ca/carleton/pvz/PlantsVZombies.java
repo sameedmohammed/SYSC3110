@@ -29,6 +29,7 @@ public class PlantsVZombies {
 	public void playGame() {
 		print(Presets.WELCOME);
 		print(gameWorld.getCurrentLevel().toString());
+		print("You start out with 500 sun points!\n");
 		boolean finished = false;
 		while (!finished) {
 			finished = commandProcessor.processCommand();

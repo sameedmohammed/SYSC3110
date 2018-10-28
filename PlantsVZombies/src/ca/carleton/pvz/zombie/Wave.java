@@ -13,6 +13,7 @@ public class Wave {
 	/**
 	 * Creates a new wave comprising the specified number of zombies.
 	 * 
+	 * @param waveNumber This wave's sequence number.
 	 * @param numZombies The number of zombies initially comprising this wave.
 	 */
 	public Wave(int waveNumber, int numZombies) {

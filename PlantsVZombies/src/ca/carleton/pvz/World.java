@@ -16,7 +16,7 @@ public class World {
 	 * Constructs a new game world.
 	 */
 	public World() {
-		levels = new Stack<Level>();
+		levels = new Stack<>();
 	}
 
 	/**
