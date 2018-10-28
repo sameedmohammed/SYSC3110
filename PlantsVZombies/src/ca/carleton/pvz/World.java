@@ -3,7 +3,6 @@ package ca.carleton.pvz;
 import java.util.Stack;
 
 import ca.carleton.pvz.level.Level;
-import ca.carleton.pvz.level.LevelOne;
 
 /**
  * A class to store the levels in the game.

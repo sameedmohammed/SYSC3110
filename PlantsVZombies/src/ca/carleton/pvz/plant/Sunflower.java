@@ -1,7 +1,5 @@
 package ca.carleton.pvz.plant;
 
-import java.awt.Point;
-
 public class Sunflower extends Plant {
 	
 	private int tick_time;
