@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * Parses prompted user input.
- * 
+ *
  */
 public class Parser {
 
@@ -20,7 +20,7 @@ public class Parser {
 
 	/**
 	 * Get the command from the user.
-	 * 
+	 *
 	 * @return The next command from the user.
 	 */
 	public Command getCommand() {
@@ -34,21 +34,21 @@ public class Parser {
 
 		inputLine = reader.nextLine();
 
-		// Find up to two words on the line.
-		Scanner tokenizer = new Scanner(inputLine);
-		if (tokenizer.hasNext()) {
-			word1 = tokenizer.next(); // get first word
+		// Find up to four words on the line.
+		try (Scanner tokenizer = new Scanner(inputLine)) {
 			if (tokenizer.hasNext()) {
-				word2 = tokenizer.next(); // get second word
+				word1 = tokenizer.next(); // get first word
 				if (tokenizer.hasNext()) {
-					word3 = tokenizer.next(); // get third word
+					word2 = tokenizer.next(); // get second word
 					if (tokenizer.hasNext()) {
-						word4 = tokenizer.next(); // get fourth word
+						word3 = tokenizer.next(); // get third word
+						if (tokenizer.hasNext()) {
+							word4 = tokenizer.next(); // get fourth word
+						}
 					}
 				}
 			}
 		}
-		tokenizer.close(); // prevent memory leak
 
 		// Now check whether this word is known. If so, create a command
 		// with it. If not, create a "null" command (for unknown command).
@@ -60,7 +60,9 @@ public class Parser {
 	}
 
 	/**
-	 * Print out a list of valid command words.
+	 * Returns the list of valid command words.
+	 *
+	 * @return The list of valid commands.
 	 */
 	public static String getCommands() {
 		return commands.getCommandList();
