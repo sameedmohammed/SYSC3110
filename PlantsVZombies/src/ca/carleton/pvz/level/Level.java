@@ -104,9 +104,9 @@ public abstract class Level {
 			s += "| ";
 			for (int col = 0; col < levelDimension.width; ++col) {
 				if (grid[col][row] != null) {
-					s += grid[col][row] + "  | ";
+					s += grid[col][row] + " | ";
 				} else {
-					s += " " + " | ";
+					s += "  | ";
 				}
 			}
 			s += "\n";

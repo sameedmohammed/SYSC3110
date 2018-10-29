@@ -41,7 +41,7 @@ public class Zombie extends Actor{
 	 */
 	@Override
 	public String toString() {
-		return "👨‍" + health;
+		return "Z " + health;
 	}
 
 }

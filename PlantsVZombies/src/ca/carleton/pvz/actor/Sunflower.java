@@ -42,6 +42,6 @@ public class Sunflower extends Actor {
 	 */
 	@Override
 	public String toString() {
-		return "🌻";
+		return "S";
 	}
 }
