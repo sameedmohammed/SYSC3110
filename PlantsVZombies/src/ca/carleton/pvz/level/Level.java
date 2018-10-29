@@ -8,9 +8,9 @@ import ca.carleton.pvz.actor.PlantManager;
 
 /**
  * An abstract class from which all the levels in the game inherit.
- * 
+ *
  */
-public abstract class Level {
+public class Level {
 
 	private String levelName;
 	private Dimension levelDimension;
@@ -19,7 +19,7 @@ public abstract class Level {
 
 	/**
 	 * Initializes the fields of a level object.
-	 * 
+	 *
 	 * @param levelName The name of the level.
 	 * @param width     The width (number of horizontal cells) of the level.
 	 * @param height    The height (number of vertical cells) of the level.
@@ -41,13 +41,14 @@ public abstract class Level {
 
 	/**
 	 * Get the cell located at the given coordinates.
-	 * 
+	 *
 	 * @param x The x-coordinate (column number).
 	 * @param y The y-coordinate (row number).
-	 * @return The cell located at the given coordinates.
+	 * @return The cell located at the given coordinates, or null if the coordinates
+	 *         are invalid.
 	 */
 	public Actor getCell(int x, int y) {
-		if(isPointValid(new Point(x, y))) {
+		if (isPointValid(new Point(x, y))) {
 			return grid[x][y];
 		}
 		return null;
@@ -55,46 +56,47 @@ public abstract class Level {
 
 	/**
 	 * Place a plant or zombie at the given point.
-	 * 
-	 * @param o A plant or zombie object to be placed.
+	 *
+	 * @param a A plant or zombie object to be placed.
 	 * @param p The point at which to place the given object.
 	 */
 	public void placeActor(Actor a, Point p) {
-		if(isPointValid(p)) {
+		if (isPointValid(p)) {
 			grid[p.x][p.y] = a;
 		}
 	}
 
 	/**
 	 * Returns the Dimension object comprising the width and height of the grid.
-	 * 
+	 *
 	 * @return The Dimension object comprising the width and height of the grid.
 	 */
 	public Dimension getDimension() {
 		return levelDimension;
 	}
-	
+
 	/**
 	 * Gets this level's name.
-	 * 
+	 *
 	 * @return This level's name.
 	 */
 	public String getLevelName() {
 		return levelName;
 	}
-	
+
 	/**
-	 * Check if point is a valid position on level
-	 * @param p
-	 * @return Returns true if valid, false otherwise
+	 * Check if the given point is a valid position on the grid.
+	 *
+	 * @param p The point whose validity will be evaluated.
+	 * @return true if valid, false otherwise.
 	 */
 	public boolean isPointValid(Point p) {
-		return (p.x < levelDimension.width && p.x >= 0 && p.y < levelDimension.height && p.y >= 0);
+		return p.x < levelDimension.width && p.x >= 0 && p.y < levelDimension.height && p.y >= 0;
 	}
-	
+
 	/**
 	 * Returns the game grid as a String.
-	 * 
+	 *
 	 * @return The game grid as a String.
 	 */
 	@Override
