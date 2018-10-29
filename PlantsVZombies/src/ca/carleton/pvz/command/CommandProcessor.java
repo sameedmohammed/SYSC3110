@@ -190,7 +190,7 @@ public class CommandProcessor {
 				}
 			}
 
-			if (turn > 3) { // shooting zombies
+			if (turn > 3) { // PeaShooter Shooting Zombies Algorithm
 
 				for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
 					for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
