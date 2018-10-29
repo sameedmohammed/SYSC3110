@@ -38,5 +38,5 @@ public class World {
 	public Level getCurrentLevel() {
 		return levels.peek();
 	}
-	
+
 }

@@ -6,10 +6,10 @@ package ca.carleton.pvz.command;
  */
 public class Command {
 
-	private final String commandWord;
-	private final String secondWord;
-	private final String thirdWord;
-	private final String fourthWord;
+	private String commandWord;
+	private String secondWord;
+	private String thirdWord;
+	private String fourthWord;
 
 	/**
 	 * Create a command object. 1st, 2nd, 3rd and 4th words must be supplied, but

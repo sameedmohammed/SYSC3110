@@ -8,7 +8,7 @@ package ca.carleton.pvz.command;
 public class CommandWords {
 
 	// a constant array that holds all valid command words
-	private static final String[] validCommands = { "quit", "help", "place", "next", "restart" };
+	private static final String[] VALID_COMMANDS = { "quit", "help", "place", "next", "restart" };
 
 	/**
 	 * Check whether a given String is a valid command word.
@@ -17,7 +17,7 @@ public class CommandWords {
 	 * @return true if it is valid, false otherwise.
 	 */
 	public boolean isCommand(String s) {
-		for (String validCommand : validCommands) {
+		for (String validCommand : VALID_COMMANDS) {
 			if (validCommand.equals(s)) {
 				return true;
 			}
@@ -33,7 +33,7 @@ public class CommandWords {
 	 */
 	public String getCommandList() {
 		String list = "";
-		for (String command : validCommands) {
+		for (String command : VALID_COMMANDS) {
 			list = String.join(" ", list, command);
 		}
 		return list;

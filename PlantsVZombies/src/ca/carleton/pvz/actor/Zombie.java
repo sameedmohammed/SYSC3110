@@ -5,9 +5,9 @@ package ca.carleton.pvz.actor;
  * zombie reaches the leftmost column, it's game over!
  *
  */
-public class Zombie extends Actor{
+public class Zombie extends Actor {
 
-	private int health; 
+	private int health;
 
 	/**
 	 * Creates a new Zombie.
