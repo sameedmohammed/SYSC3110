@@ -15,7 +15,7 @@ public final class Presets {
 			+ "\nYou can type \"help\" followed by (a space and) a valid command (other than \"help\") to learn how to use the command.\n";
 	
 	public static final String GAME_OVER = "Game over! You failed to protect your home from the zombies :( \n" +
-										  "Please type \\\"restart\\\" if you wish to try again. \n";
+										  "Please type \"restart\" if you wish to try again. \n";
 	
 	public static final String INVALID_PLANT_TYPE = "Invalid plant type.";
 	
