@@ -1,13 +1,13 @@
-package ca.carleton.pvz.zombie;
+package ca.carleton.pvz.actor;
 
 /**
  * A zombie which advances from the rightmost grid column to the left; when a
  * zombie reaches the leftmost column, it's game over!
  *
  */
-public class Zombie {
+public class Zombie extends Actor{
 
-	private int health;
+	private int health; 
 
 	/**
 	 * Creates a new Zombie.
@@ -41,7 +41,7 @@ public class Zombie {
 	 */
 	@Override
 	public String toString() {
-		return "Z " + health;
+		return "👨‍" + health;
 	}
 
 }
