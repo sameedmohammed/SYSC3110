@@ -9,6 +9,6 @@ public class Sunflower extends Plant {
 	}
 	
 	public String toString() {
-		return "🌻";
+		return "S";
 	}
 }

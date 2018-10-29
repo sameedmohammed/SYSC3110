@@ -10,7 +10,7 @@ public class PeaShooter extends Plant {
 	}
 	
 	public String toString() {
-		return "🌱";
+		return "P";
 	}
 
 }
