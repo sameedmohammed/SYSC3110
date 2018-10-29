@@ -2,7 +2,9 @@ package ca.carleton.pvz.level;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import ca.carleton.pvz.plant.PlantManager;
+
+import ca.carleton.pvz.actor.Actor;
+import ca.carleton.pvz.actor.PlantManager;
 
 /**
  * An abstract class from which all the levels in the game inherit.
@@ -12,7 +14,7 @@ public abstract class Level {
 
 	private String levelName;
 	private Dimension levelDimension;
-	protected Object[][] grid; // the grid in which one can place plants
+	protected Actor[][] grid; // the grid in which one can place plants
 	private PlantManager plantManager; // will be utilized in future iterations
 
 	/**
@@ -26,12 +28,12 @@ public abstract class Level {
 
 		this.levelName = levelName;
 		levelDimension = new Dimension(width, height);
-		grid = new Object[width][height];
+		grid = new Actor[width][height];
 		plantManager = new PlantManager();
 
 		// initialize grid (playable area)
-		for (Object[] row : grid) {
-			for (Object cell : row) {
+		for (Actor[] row : grid) {
+			for (Actor cell : row) {
 				cell = null;
 			}
 		}
@@ -44,7 +46,7 @@ public abstract class Level {
 	 * @param y The y-coordinate (row number).
 	 * @return The cell located at the given coordinates.
 	 */
-	public Object getCell(int x, int y) {
+	public Actor getCell(int x, int y) {
 		if(isPointValid(new Point(x, y))) {
 			return grid[x][y];
 		}
@@ -57,9 +59,9 @@ public abstract class Level {
 	 * @param o A plant or zombie object to be placed.
 	 * @param p The point at which to place the given object.
 	 */
-	public void placeActor(Object o, Point p) {
+	public void placeActor(Actor a, Point p) {
 		if(isPointValid(p)) {
-			grid[p.x][p.y] = o;
+			grid[p.x][p.y] = a;
 		}
 	}
 
@@ -87,7 +89,7 @@ public abstract class Level {
 	 * @return Returns true if valid, false otherwise
 	 */
 	public boolean isPointValid(Point p) {
-		return (p.x < levelDimension.width && p.x > 0 && p.y < levelDimension.height && p.y > 0);
+		return (p.x < levelDimension.width && p.x >= 0 && p.y < levelDimension.height && p.y >= 0);
 	}
 	
 	/**
@@ -102,9 +104,9 @@ public abstract class Level {
 			s += "| ";
 			for (int col = 0; col < levelDimension.width; ++col) {
 				if (grid[col][row] != null) {
-					s += grid[col][row] + " | ";
+					s += grid[col][row] + "  | ";
 				} else {
-					s += "  | ";
+					s += " " + " | ";
 				}
 			}
 			s += "\n";
