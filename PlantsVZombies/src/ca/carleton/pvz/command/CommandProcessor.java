@@ -138,8 +138,13 @@ public class CommandProcessor {
 
 		if (!command.hasSecondWord()) {
 			game.print(Presets.NEXT_WHAT);
+			return;
 
-		} else if (command.getSecondWord().equals("turn")) {
+		}
+		
+
+		
+		else if (command.getSecondWord().equals("turn")) {
 			++turn;
 
 			// wave logic
@@ -305,14 +310,15 @@ public class CommandProcessor {
 			game.print("You currently have " + sunPoints + " sun points.");
 			game.printGame();
 
-		} else if (command.getSecondWord().equals("wave")) {
+
 
 			if (game.isGameOver()) {
 				game.printGame();
 				game.print(Presets.GAME_OVER);
 				game.setGameOver();
+				return;
 
-			} else {
+			} 
 
 				if (waveNumber == 1 && waveDefeated) {
 					waveDefeated = false;
@@ -336,14 +342,15 @@ public class CommandProcessor {
 					game.print("Congrats! You finished the first level of Plants vs. Zombies.");
 					game.print("Please type 'restart' if you wish to play again.");
 
-				} else {
-					game.print("You haven't killed the current wave of zombies!");
-				}
-			}
+				} 
 
-		} else {
+
+	}
+		else {
 			game.print(Presets.INVALID);
 		}
+		
+		
 	}
 
 	/**
@@ -355,7 +362,7 @@ public class CommandProcessor {
 
 		if (waveNumber >= 3 && waveDefeated) {
 			game.print("Congrats! You finished the first level of Plants vs. Zombies");
-			game.print("Please type \"restart\" if you wish to play again.");
+			game.print("Please type 'restart' if you wish to play again.");
 			return;
 		}
 
