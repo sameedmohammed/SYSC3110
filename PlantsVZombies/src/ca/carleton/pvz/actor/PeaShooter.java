@@ -1,10 +1,10 @@
-package ca.carleton.pvz.plant;
+package ca.carleton.pvz.actor;
 
 /**
  * A class for the pea-shooting plant.
  *
  */
-public class PeaShooter extends Plant {
+public class PeaShooter extends Actor {
 
 	private int hits; // number of hits on zombies
 
@@ -48,6 +48,6 @@ public class PeaShooter extends Plant {
 	 */
 	@Override
 	public String toString() {
-		return "P";
+		return "🌱";
 	}
 }

@@ -1,4 +1,4 @@
-package ca.carleton.pvz.plant;
+package ca.carleton.pvz.actor;
 
 /**
  * Handles the creation and placement of Plant objects.

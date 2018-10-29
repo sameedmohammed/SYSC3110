@@ -1,4 +1,4 @@
-package ca.carleton.pvz.plant;
+package ca.carleton.pvz.actor;
 
 /**
  * Creates a sunflower, which accumulates sun points each turn. Sun points are
@@ -6,7 +6,7 @@ package ca.carleton.pvz.plant;
  * zombies.
  *
  */
-public class Sunflower extends Plant {
+public class Sunflower extends Actor {
 
 	private int turnPlaced; // the turn this sunflower was planted
 
@@ -42,6 +42,6 @@ public class Sunflower extends Plant {
 	 */
 	@Override
 	public String toString() {
-		return "S";
+		return "🌻";
 	}
 }

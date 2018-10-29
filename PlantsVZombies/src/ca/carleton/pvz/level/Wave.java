@@ -1,4 +1,6 @@
-package ca.carleton.pvz.zombie;
+package ca.carleton.pvz.level;
+
+import ca.carleton.pvz.actor.Zombie;
 
 /**
  * Stores a wave of zombies.

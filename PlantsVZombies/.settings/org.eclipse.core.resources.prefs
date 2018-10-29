@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/ca/carleton/pvz/plant/PeaShooter.java=UTF-8
-encoding//src/ca/carleton/pvz/plant/Sunflower.java=UTF-8
+encoding//src/ca/carleton/pvz/actor/PeaShooter.java=UTF-8
+encoding//src/ca/carleton/pvz/actor/Sunflower.java=UTF-8
+encoding//src/ca/carleton/pvz/actor/Zombie.java=UTF-8
+encoding//src/ca/carleton/pvz/level/Level.java=UTF-8

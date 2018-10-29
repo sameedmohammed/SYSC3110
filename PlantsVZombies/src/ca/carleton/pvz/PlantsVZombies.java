@@ -12,14 +12,16 @@ public class PlantsVZombies {
 
 	private World gameWorld; // stores the levels to be played
 	private CommandProcessor commandProcessor; // processes user input
-
+	private boolean gameOver;
+	
 	/**
 	 * Constructs a new game to be played.
 	 */
 	public PlantsVZombies() {
 		gameWorld = new World();
-		commandProcessor = new CommandProcessor(gameWorld);
+		commandProcessor = new CommandProcessor(this);
 		gameWorld.addLevel(new LevelOne());
+		gameOver = false;
 		playGame();
 	}
 
@@ -34,7 +36,33 @@ public class PlantsVZombies {
 			finished = commandProcessor.processCommand();
 		}
 	}
-
+	
+	public World getWorld() {
+		return gameWorld;
+	}
+	
+	/**
+	 * Sets gameOver to true
+	 */
+	public void setGameOver() {
+		gameOver = true;
+	}
+	
+	/**
+	 * Is game over?
+	 * @return Returns true if game is over, false otherwise. 
+	 */
+	public boolean isGameOver() {
+		return gameOver;
+	}
+	
+	/**
+	 * Print out the current level being played
+	 */
+	public void printGame() {
+		System.out.println(getWorld().getCurrentLevel().toString());
+	}
+	
 	/**
 	 * Shorthand for printing to the terminal.
 	 * 
