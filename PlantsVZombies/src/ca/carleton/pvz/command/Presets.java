@@ -43,4 +43,8 @@ public final class Presets {
 			+ "\n\"place <plant type> <x-coordinate> <y-coordinate>\"\n";
 	
 	public static final String QUIT_HELP = "Quits the game (terminates the app).";
+	
+	public static final String PLACE_ON_ZOMBIE = "You cannot place anything on top of a zombie!";
+	
+	public static final String INVALID_POINT = "Sorry, the point you entered does not exist on the current level.";
 }

@@ -376,12 +376,13 @@ public class CommandProcessor {
 		int yPos = Integer.parseInt(command.getFourthWord());
 		
 		if(!game.getWorld().getCurrentLevel().isPointValid(new Point(xPos, yPos))) {
+			game.print(Presets.INVALID_POINT);
 			return;
 		}
 		
 		Actor o = game.getWorld().getCurrentLevel().getCell(xPos, yPos);
 		if (o instanceof Zombie) {
-			game.print("You cannot place anything on top of a zombie!");
+			game.print(Presets.PLACE_ON_ZOMBIE);
 			return;
 		}
 
