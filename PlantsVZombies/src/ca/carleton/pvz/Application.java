@@ -13,7 +13,7 @@ public class Application {
 
 	public static void main(String args[]) {
 
-		new PlantsVZombies(); // start a new game
+		 new PlantsVZombies(); // start a new game
 
 	}
 }
