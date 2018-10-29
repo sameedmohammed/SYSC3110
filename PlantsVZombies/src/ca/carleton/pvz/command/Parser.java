@@ -34,7 +34,7 @@ public class Parser {
 
 		inputLine = reader.nextLine();
 
-		// Find up to four words on the line.
+		// try-with-resources to find up to four words on the line.
 		try (Scanner tokenizer = new Scanner(inputLine)) {
 			if (tokenizer.hasNext()) {
 				word1 = tokenizer.next(); // get first word

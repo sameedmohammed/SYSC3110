@@ -3,7 +3,8 @@ package ca.carleton.pvz.level;
 import ca.carleton.pvz.actor.Zombie;
 
 /**
- * Stores a wave of zombies.
+ * Stores a wave of zombies. This class is currently not being used, but will be
+ * utilized in future iterations.
  *
  */
 public class Wave {
@@ -19,7 +20,7 @@ public class Wave {
 	 * @param numZombies The number of zombies initially comprising this wave.
 	 */
 	public Wave(int waveNumber, int numZombies) {
-		
+
 		this.waveNumber = waveNumber;
 		zombies = new Zombie[numZombies];
 		remainingZombies = numZombies;
@@ -38,7 +39,7 @@ public class Wave {
 	public int getRemainingZombies() {
 		return remainingZombies;
 	}
-	
+
 	/**
 	 * Gets this wave's number.
 	 * 

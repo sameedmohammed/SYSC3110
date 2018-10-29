@@ -3,7 +3,6 @@ package ca.carleton.pvz.command;
 import java.awt.Point;
 import java.util.Random;
 import ca.carleton.pvz.PlantsVZombies;
-import ca.carleton.pvz.World;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
@@ -14,6 +13,7 @@ import ca.carleton.pvz.actor.Zombie;
  *
  */
 public class CommandProcessor {
+
 	private PlantsVZombies game;
 	private Parser parser;
 	private int sunPoints; // in-game currency spent on plants
@@ -30,7 +30,8 @@ public class CommandProcessor {
 	/**
 	 * Constructs a CommandProcessor for game state advancement.
 	 *
-	 * @param gameWorld The stack of levels to be played.
+	 * @param game The PvZ game whose states will be advanced by this
+	 *             CommandProcessor.
 	 */
 	public CommandProcessor(PlantsVZombies game) {
 		this.game = game;
@@ -138,13 +139,9 @@ public class CommandProcessor {
 
 		if (!command.hasSecondWord()) {
 			game.print(Presets.NEXT_WHAT);
-			return;
 
-		}
-		
+		} else if (command.getSecondWord().equals("turn")) {
 
-		
-		else if (command.getSecondWord().equals("turn")) {
 			++turn;
 
 			// wave logic
@@ -152,16 +149,16 @@ public class CommandProcessor {
 				game.print(Presets.WAVE_COMPLETE);
 				return;
 			}
+
 			if (waveNumber == 2 && waveDefeated) {
 				game.print(Presets.WAVE_COMPLETE);
 				return;
 			}
 
 			if (waveNumber >= 3 && waveDefeated) {
-				game.print("Congrats! You finished the first level of Plants Vs Zombies");
-				game.print("Please type 'restart' if you wish to play again");
+				game.print("Congrats! You finished the first level of Plants vs. Zombies");
+				game.print("Please type \"restart\" if you wish to play again");
 				return;
-
 			}
 
 			if (sunflowerOnCooldown && turn - sunflowerCooldown == 2) {
@@ -172,7 +169,8 @@ public class CommandProcessor {
 				peaShooterOnCooldown = false;
 			}
 
-			if (turn - previousTurn == 3) { // passive sun points logic (every 3 turns, increase sun points by 25)
+			// passive sun point logic -- every three turns, increase sun points by 25
+			if (turn - previousTurn == 3) {
 				previousTurn = turn;
 				sunPoints += 25;
 			}
@@ -190,24 +188,22 @@ public class CommandProcessor {
 				}
 			}
 
-			if (turn > 3) { // PeaShooter Shooting Zombies Algorithm
-
+			// peashooter shooting zombies algorithm
+			if (turn > 3) {
 				for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
 					for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
 						Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
-
-						if (o instanceof PeaShooter) { // if peashooter, shoot all zombies to right of peashooter
+						if (o instanceof PeaShooter) { // if peashooter, shoot all zombies to the right of peashooter
 							((PeaShooter) o).newTurn();
 							int i1 = i;
-							for (int index = i1; index < game.getWorld().getCurrentLevel().getDimension().height; ++index) {
+							for (int index = i1; index < game.getWorld().getCurrentLevel()
+									.getDimension().height; ++index) {
 								Actor o1 = game.getWorld().getCurrentLevel().getCell(index, j);
-
 								if (o1 instanceof Zombie) {
-
 									while (((PeaShooter) o).getHits() < 4) {
+
 										// while loop - zombie gets hit up to 4 times or health becomes zero
 										((Zombie) o1).setHealth(((Zombie) o1).getHealth() - 100);
-
 										((PeaShooter) o).addHit();
 										if (((Zombie) o1).getHealth() <= 0) {
 											game.getWorld().getCurrentLevel().placeActor(null, new Point(index, j));
@@ -220,10 +216,7 @@ public class CommandProcessor {
 													.getDimension().height; ++i2) {
 												Actor o2 = game.getWorld().getCurrentLevel().getCell(i2, j);
 												if (o2 instanceof Zombie) {
-
 													while (((PeaShooter) o).getHits() < 4) {
-														// while loop - zombie gets hit up to 4 times or health becomes
-														// zero
 														((Zombie) o2).setHealth(((Zombie) o2).getHealth() - 100);
 														((PeaShooter) o).addHit();
 														if (((Zombie) o2).getHealth() <= 0) {
@@ -245,9 +238,7 @@ public class CommandProcessor {
 			if (turn > 3) { // shifting already-placed zombies one to the left each turn
 				for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
 					for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
-
 						Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
-
 						if (o instanceof Zombie) {
 							Actor z1 = game.getWorld().getCurrentLevel().getCell(i, j);
 							game.getWorld().getCurrentLevel().placeActor(z1, new Point(i - 1, j));
@@ -266,7 +257,7 @@ public class CommandProcessor {
 				++numZombies;
 			}
 
-			if (waveNumber == 2 && turn >= 3 && numZombies < 5) { // zombies spawn after turn == 3 for first wave
+			if (waveNumber == 2 && turn >= 3 && numZombies < 5) {
 				game.print(Presets.ZOMBIES_SPAWNING);
 				Random random = new Random();
 				int tmp = random.nextInt(5);
@@ -275,7 +266,7 @@ public class CommandProcessor {
 				++numZombies;
 			}
 
-			if (waveNumber == 3 && turn >= 3 && numZombies < 7) { // zombies spawn after turn == 3 for first wave
+			if (waveNumber == 3 && turn >= 3 && numZombies < 7) {
 				game.print(Presets.ZOMBIES_SPAWNING);
 				Random random = new Random();
 				int tmp = random.nextInt(5);
@@ -284,7 +275,7 @@ public class CommandProcessor {
 				++numZombies;
 			}
 
-			if (turn > 6) { // searching if any zombies made it to end game
+			if (turn > 6) { // searching for any zombies that made it to end game
 				for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
 					Actor o = game.getWorld().getCurrentLevel().getCell(0, j);
 					if (o instanceof Zombie) {
@@ -307,50 +298,44 @@ public class CommandProcessor {
 					}
 				}
 			}
+
 			game.print("You currently have " + sunPoints + " sun points.");
 			game.printGame();
-
-
 
 			if (game.isGameOver()) {
 				game.printGame();
 				game.print(Presets.GAME_OVER);
 				game.setGameOver();
 				return;
+			}
 
-			} 
+			if (waveNumber == 1 && waveDefeated) {
+				waveDefeated = false;
+				numZombies = 0;
+				turn = 0;
+				waveNumber = 2;
+				game.print("Wave 2 will arrive shortly.");
+				return;
+			}
 
-				if (waveNumber == 1 && waveDefeated) {
-					waveDefeated = false;
-					numZombies = 0;
-					turn = 0;
-					waveNumber = 2;
-					game.print("Wave 2 will arrive shortly.");
-					return;
-				}
+			if (waveNumber == 2 && waveDefeated) {
+				waveDefeated = false;
+				numZombies = 0;
+				turn = 0;
+				waveNumber = 3;
+				game.print("Wave 3 will arrive shortly.");
+				return;
+			}
 
-				if (waveNumber == 2 && waveDefeated) {
-					waveDefeated = false;
-					numZombies = 0;
-					turn = 0;
-					waveNumber = 3;
-					game.print("Wave 3 will arrive shortly.");
-					return;
-				}
+			if (waveNumber >= 3 && waveDefeated) {
+				game.print("Congrats! You finished the first level of Plants vs. Zombies.");
+				game.print("Please type 'restart' if you wish to play again.");
+			}
 
-				if (waveNumber >= 3 && waveDefeated) {
-					game.print("Congrats! You finished the first level of Plants vs. Zombies.");
-					game.print("Please type 'restart' if you wish to play again.");
-
-				} 
-
-
-	}
-		else {
+		} else {
 			game.print(Presets.INVALID);
 		}
-		
-		
+
 	}
 
 	/**
@@ -381,12 +366,12 @@ public class CommandProcessor {
 
 		int xPos = Integer.parseInt(command.getThirdWord());
 		int yPos = Integer.parseInt(command.getFourthWord());
-		
-		if(!game.getWorld().getCurrentLevel().isPointValid(new Point(xPos, yPos))) {
+
+		if (!game.getWorld().getCurrentLevel().isPointValid(new Point(xPos, yPos))) {
 			game.print(Presets.INVALID_POINT);
 			return;
 		}
-		
+
 		Actor o = game.getWorld().getCurrentLevel().getCell(xPos, yPos);
 		if (o instanceof Zombie) {
 			game.print(Presets.PLACE_ON_ZOMBIE);
@@ -399,7 +384,6 @@ public class CommandProcessor {
 				game.print(plantType + Presets.PLANTTYPE_COOLDOWN); // include number of turns left
 			} else if (sunPoints - 100 < 0) {
 				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType);
-
 			} else {
 				PeaShooter plantToPlace;
 				plantToPlace = new PeaShooter();
