@@ -42,6 +42,7 @@ The level is a grid, and in each grid cell, a plant or zombie can exist.
 During your first few turns of a new level, you'll want to place some plants near the left side of the grid. After a few turns, zombies will begin to enter from the right, and your plants will attack them.
 
 The image below has a demo of what the level grid will look like with some *peashooters* and a *sunflower* placed on the left hand side, and *zombies* attacking from the right.
+
 ![](images/level.png?raw=true)
 
 ## Plant types
