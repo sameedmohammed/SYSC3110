@@ -299,7 +299,7 @@ public class CommandProcessor {
 				}
 			}
 
-			game.print("You currently have " + sunPoints + " sun points.");
+			game.print("\nYou currently have " + sunPoints + " sun points.\n");
 			game.printGame();
 
 			if (game.isGameOver()) {
@@ -346,8 +346,8 @@ public class CommandProcessor {
 	private void processPlace(Command command) {
 
 		if (waveNumber >= 3 && waveDefeated) {
-			game.print("Congrats! You finished the first level of Plants vs. Zombies");
-			game.print("Please type 'restart' if you wish to play again.");
+			game.print("\nCongrats! You finished the first level of Plants vs. Zombies\n");
+			game.print("\nPlease type \"restart\" if you wish to play again.\n");
 			return;
 		}
 
@@ -362,11 +362,17 @@ public class CommandProcessor {
 			return;
 		}
 
+		int xPos, yPos;
+		try {
+			xPos = Integer.parseInt(command.getThirdWord());
+			yPos = Integer.parseInt(command.getFourthWord());
+		} catch (NumberFormatException ex) {
+			game.print(Presets.PLACE_WHERE);
+			return;
+		}
+
 		String plantType = command.getSecondWord();
-
-		int xPos = Integer.parseInt(command.getThirdWord());
-		int yPos = Integer.parseInt(command.getFourthWord());
-
+		
 		if (!game.getWorld().getCurrentLevel().isPointValid(new Point(xPos, yPos))) {
 			game.print(Presets.INVALID_POINT);
 			return;
@@ -381,9 +387,9 @@ public class CommandProcessor {
 		if (plantType.equalsIgnoreCase("peashooter")) {
 
 			if (peaShooterOnCooldown) {
-				game.print(plantType + Presets.PLANTTYPE_COOLDOWN); // include number of turns left
+				game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); // include number of turns left
 			} else if (sunPoints - 100 < 0) {
-				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType);
+				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
 			} else {
 				PeaShooter plantToPlace;
 				plantToPlace = new PeaShooter();
@@ -391,16 +397,16 @@ public class CommandProcessor {
 				sunPoints -= 100;
 				peaShooterOnCooldown = true;
 				peaShooterCooldown = turn;
-				game.print("You currently have " + sunPoints + " sun points.");
+				game.print("\nYou currently have " + sunPoints + " sun points.\n");
 				game.printGame();
 			}
 
 		} else if (plantType.equalsIgnoreCase("sunflower")) {
 
 			if (sunflowerOnCooldown) {
-				game.print(plantType + Presets.PLANTTYPE_COOLDOWN); // include number of turns left
+				game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); // include number of turns left
 			} else if (sunPoints - 50 < 0) {
-				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType);
+				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
 
 			} else {
 				Sunflower plantToPlace = new Sunflower();
@@ -409,7 +415,7 @@ public class CommandProcessor {
 				sunPoints -= 50;
 				sunflowerOnCooldown = true;
 				sunflowerCooldown = turn;
-				game.print("You currently have " + sunPoints + " sun points.");
+				game.print("\nYou currently have " + sunPoints + " sun points.\n");
 				game.printGame();
 			}
 
