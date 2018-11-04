@@ -7,6 +7,7 @@ import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
+import ca.carleton.pvz.level.Wave;
 
 /**
  * Processes the user-inputed command and advances the game accordingly.
@@ -19,7 +20,7 @@ public class CommandProcessor {
 	private int sunPoints; // in-game currency spent on plants
 	private int turn;
 	private int previousTurn;
-	private int waveNumber; // zombie wave number
+	private Wave wave;
 	private boolean peaShooterOnCooldown;
 	private boolean sunflowerOnCooldown;
 	private int peaShooterCooldown;
@@ -30,8 +31,9 @@ public class CommandProcessor {
 	/**
 	 * Constructs a CommandProcessor for game state advancement.
 	 *
-	 * @param game The PvZ game whose states will be advanced by this
-	 *             CommandProcessor.
+	 * @param game
+	 *            The PvZ game whose states will be advanced by this
+	 *            CommandProcessor.
 	 */
 	public CommandProcessor(PlantsVZombies game) {
 		this.game = game;
@@ -39,7 +41,7 @@ public class CommandProcessor {
 		sunPoints = 500;
 		turn = 0;
 		previousTurn = 0;
-		waveNumber = 1;
+		wave = new Wave(1, 3);
 		peaShooterOnCooldown = false;
 		sunflowerOnCooldown = false;
 		peaShooterCooldown = 0;
@@ -99,7 +101,8 @@ public class CommandProcessor {
 	/**
 	 * Tells the user how to use the valid commands.
 	 *
-	 * @param command The given command.
+	 * @param command
+	 *            The given command.
 	 */
 	private void processHelp(Command command) {
 
@@ -133,7 +136,8 @@ public class CommandProcessor {
 	/**
 	 * Advances the game to the next state (turn) based on the current state.
 	 *
-	 * @param command The given command.
+	 * @param command
+	 *            The given command.
 	 */
 	private void processNext(Command command) {
 
@@ -145,17 +149,17 @@ public class CommandProcessor {
 			++turn;
 
 			// wave logic
-			if (waveNumber == 1 && waveDefeated) {
+			if (wave.getWaveNumber() == 1 && waveDefeated) {
 				game.print(Presets.WAVE_COMPLETE);
 				return;
 			}
 
-			if (waveNumber == 2 && waveDefeated) {
+			if (wave.getWaveNumber() == 2 && waveDefeated) {
 				game.print(Presets.WAVE_COMPLETE);
 				return;
 			}
 
-			if (waveNumber >= 3 && waveDefeated) {
+			if (wave.getWaveNumber() >= 3 && waveDefeated) {
 				game.print("Congrats! You finished the first level of Plants vs. Zombies");
 				game.print("Please type \"restart\" if you wish to play again");
 				return;
@@ -175,7 +179,7 @@ public class CommandProcessor {
 				sunPoints += 25;
 			}
 
-			if (waveNumber >= 1) {
+			if (wave.getWaveNumber() >= 1) {
 				for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
 					for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
 						Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
@@ -248,31 +252,23 @@ public class CommandProcessor {
 				}
 			}
 
-			if (waveNumber == 1 && turn >= 3 && numZombies < 3) { // zombies spawn after turn == 3 for first wave
+			if (wave.getWaveNumber() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn
+																							// == 3 for first wave
 				game.print(Presets.ZOMBIES_SPAWNING);
-				Random random = new Random();
-				int tmp = random.nextInt(5);
-				Zombie z = new Zombie();
-				game.getWorld().getCurrentLevel().placeActor(z, new Point(4, tmp));
-				++numZombies;
+				game = wave.spawnZombies(game);
+				wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 			}
 
-			if (waveNumber == 2 && turn >= 3 && numZombies < 5) {
+			if (wave.getWaveNumber() == 2 && turn >= 3 && wave.getRemainingZombies() > 0) {
 				game.print(Presets.ZOMBIES_SPAWNING);
-				Random random = new Random();
-				int tmp = random.nextInt(5);
-				Zombie z = new Zombie();
-				game.getWorld().getCurrentLevel().placeActor(z, new Point(4, tmp));
-				++numZombies;
+				game = wave.spawnZombies(game);
+				wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 			}
 
-			if (waveNumber == 3 && turn >= 3 && numZombies < 7) {
+			if (wave.getWaveNumber() == 3 && turn >= 3 && wave.getRemainingZombies() > 0) {
 				game.print(Presets.ZOMBIES_SPAWNING);
-				Random random = new Random();
-				int tmp = random.nextInt(5);
-				Zombie z = new Zombie();
-				game.getWorld().getCurrentLevel().placeActor(z, new Point(4, tmp));
-				++numZombies;
+				game = wave.spawnZombies(game);
+				wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 			}
 
 			if (turn > 6) { // searching for any zombies that made it to end game
@@ -287,7 +283,8 @@ public class CommandProcessor {
 				}
 			}
 
-			if ((waveNumber == 1 && turn >= 6) || (waveNumber == 2 && turn >= 8) || (waveNumber == 3 && turn >= 10)) {
+			if ((wave.getWaveNumber() == 1 && turn >= 6) || (wave.getWaveNumber() == 2 && turn >= 8)
+					|| (wave.getWaveNumber() == 3 && turn >= 10)) {
 				waveDefeated = true;
 				for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
 					for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
@@ -309,25 +306,25 @@ public class CommandProcessor {
 				return;
 			}
 
-			if (waveNumber == 1 && waveDefeated) {
+			if (wave.getWaveNumber() == 1 && waveDefeated) {
 				waveDefeated = false;
-				numZombies = 0;
+				wave.setRemainingZombies(5);
 				turn = 0;
-				waveNumber = 2;
+				wave.setWaveNumber(2);
 				game.print("Wave 2 will arrive shortly.");
 				return;
 			}
 
-			if (waveNumber == 2 && waveDefeated) {
+			if (wave.getWaveNumber() == 2 && waveDefeated) {
 				waveDefeated = false;
-				numZombies = 0;
+				wave.setRemainingZombies(7);
 				turn = 0;
-				waveNumber = 3;
+				wave.setWaveNumber(3);
 				game.print("Wave 3 will arrive shortly.");
 				return;
 			}
 
-			if (waveNumber >= 3 && waveDefeated) {
+			if (wave.getWaveNumber() >= 3 && waveDefeated) {
 				game.print("Congrats! You finished the first level of Plants vs. Zombies.");
 				game.print("Please type 'restart' if you wish to play again.");
 			}
@@ -341,11 +338,12 @@ public class CommandProcessor {
 	/**
 	 * Processes the placement of a plant.
 	 *
-	 * @param command The given command.
+	 * @param command
+	 *            The given command.
 	 */
 	private void processPlace(Command command) {
 
-		if (waveNumber >= 3 && waveDefeated) {
+		if (wave.getWaveNumber() >= 3 && waveDefeated) {
 			game.print("\nCongrats! You finished the first level of Plants vs. Zombies\n");
 			game.print("\nPlease type \"restart\" if you wish to play again.\n");
 			return;
@@ -372,7 +370,7 @@ public class CommandProcessor {
 		}
 
 		String plantType = command.getSecondWord();
-		
+
 		if (!game.getWorld().getCurrentLevel().isPointValid(new Point(xPos, yPos))) {
 			game.print(Presets.INVALID_POINT);
 			return;
