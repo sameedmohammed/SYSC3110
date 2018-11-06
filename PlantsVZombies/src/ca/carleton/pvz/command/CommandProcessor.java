@@ -25,8 +25,9 @@ public class CommandProcessor {
 	private boolean sunflowerOnCooldown;
 	private int peaShooterCooldown;
 	private int sunflowerCooldown;
-	
+
 	private PeaShooter peaShooter;
+	private Zombie zombie;
 
 	private boolean waveDefeated;
 
@@ -41,6 +42,7 @@ public class CommandProcessor {
 		this.game = game;
 		parser = new Parser();
 		peaShooter = new PeaShooter();
+		zombie = new Zombie();
 		sunPoints = 500;
 		turn = 0;
 		previousTurn = 0;
@@ -194,22 +196,10 @@ public class CommandProcessor {
 				}
 			}
 
-			// peashooter shooting zombies algorithm
+			
 			if (turn > 3) {
 				game = peaShooter.shootZombies(game);
-			}
-
-			if (turn > 3) { // shifting already-placed zombies one to the left each turn
-				for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
-					for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
-						Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
-						if (o instanceof Zombie) {
-							Actor z1 = game.getWorld().getCurrentLevel().getCell(i, j);
-							game.getWorld().getCurrentLevel().placeActor(z1, new Point(i - 1, j));
-							game.getWorld().getCurrentLevel().placeActor(null, new Point(i, j));
-						}
-					}
-				}
+				game = zombie.moveZombies(game); // shifting already-placed zombies one to the left each turn
 			}
 
 			if (wave.getWaveNumber() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn

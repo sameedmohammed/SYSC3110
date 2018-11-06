@@ -16,7 +16,7 @@ public class Wave {
 
 	private int remainingZombies;
 	private int waveNumber;
-	private PlantsVZombies map;
+	private PlantsVZombies game;
 
 	/**
 	 * Creates a new wave comprising the specified number of zombies.
@@ -38,14 +38,14 @@ public class Wave {
 	 * @param game The gameWorld to be modified when zombies are spawning.
 	 * @return map The resulting gameWorld after zombies have spawned
 	 */
-	public PlantsVZombies spawnZombies(PlantsVZombies game) {
-		map = game;
+	public PlantsVZombies spawnZombies(PlantsVZombies map) {
+		game = map;
 		Random random = new Random();
 		int tmp = random.nextInt(5);
 		Zombie z = new Zombie();
 		game.getWorld().getCurrentLevel().placeActor(z, new Point(4, tmp));
 		
-		return map;
+		return game;
 	}
 	
 
