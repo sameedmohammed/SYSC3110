@@ -5,7 +5,8 @@ package ca.carleton.pvz;
  * 
  * Game driver.
  * 
- * @author Team 5; Jacob Laboissonniere, Sameed Mohammed, Abdillahi Nur, Paul Roode
+ * @author Team 5; Jacob Laboissonniere, Sameed Mohammed, Abdillahi Nur, Paul
+ *         Roode
  * @version 1.0, 29-Oct-2018
  * 
  */
@@ -13,7 +14,7 @@ public class Application {
 
 	public static void main(String args[]) {
 
-		 new PlantsVZombies(); // start a new game
+		new PlantsVZombies(); // start a new game
 
 	}
 }
