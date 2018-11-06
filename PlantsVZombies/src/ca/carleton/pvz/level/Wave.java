@@ -36,7 +36,7 @@ public class Wave {
 	 * Spawns zombies on game map according to waveNumber and numberofZombies.
 	 * 
 	 * @param game The gameWorld to be modified when zombies are spawning.
-	 * @param 
+	 * @return map The resulting gameWorld after zombies have spawned
 	 */
 	public PlantsVZombies spawnZombies(PlantsVZombies game) {
 		map = game;
