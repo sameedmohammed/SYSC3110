@@ -196,13 +196,10 @@ public class CommandProcessor {
 				}
 			}
 
-			// peashooter shooting zombies algorithm
+			
 			if (turn > 3) {
 				game = peaShooter.shootZombies(game);
-			}
-
-			if (turn > 3) { // shifting already-placed zombies one to the left each turn
-				game = zombie.moveZombies(game);
+				game = zombie.moveZombies(game); // shifting already-placed zombies one to the left each turn
 			}
 
 			if (wave.getWaveNumber() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn
