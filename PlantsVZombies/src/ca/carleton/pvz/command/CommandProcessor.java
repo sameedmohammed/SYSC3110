@@ -26,8 +26,6 @@ public class CommandProcessor {
 	private int peaShooterCooldown;
 	private int sunflowerCooldown;
 
-	private PeaShooter peaShooter;
-
 	private boolean waveDefeated;
 
 	/**
@@ -40,7 +38,6 @@ public class CommandProcessor {
 	public CommandProcessor(PlantsVZombies game) {
 		this.game = game;
 		parser = new Parser();
-		peaShooter = new PeaShooter();
 		sunPoints = 500;
 		turn = 0;
 		previousTurn = 0;
@@ -196,7 +193,7 @@ public class CommandProcessor {
 
 			
 			if (turn > 3) {
-				game = peaShooter.shootZombies(game);
+				PeaShooter.shootZombies(game.getWorld().getCurrentLevel());
 				Zombie.moveZombies(game.getWorld().getCurrentLevel()); // shifting already-placed zombies one to the left each turn
 			}
 

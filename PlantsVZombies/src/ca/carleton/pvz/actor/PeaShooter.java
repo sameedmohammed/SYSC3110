@@ -2,7 +2,8 @@ package ca.carleton.pvz.actor;
 
 import java.awt.Point;
 
-import ca.carleton.pvz.PlantsVZombies;
+import ca.carleton.pvz.level.Level;
+
 
 /**
  * A class for the pea-shooting plant.
@@ -11,7 +12,6 @@ import ca.carleton.pvz.PlantsVZombies;
 public class PeaShooter extends Actor {
 
 	private int hits; // number of hits on zombies
-	private PlantsVZombies game;
 
 	/**
 	 * Creates a new pea-shooting plant. This type of plant can shoot and "kill"
@@ -55,16 +55,16 @@ public class PeaShooter extends Actor {
 	 * @return map The resulting gameWorld after pea shooters are done shooting at
 	 *         zombies
 	 */
-	public PlantsVZombies shootZombies(PlantsVZombies map) {
-		game = map;
-		for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
-			for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
-				Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
+	public static void shootZombies(Level level) {
+
+		for (int i = 0; i < level.getDimension().height; ++i) {
+			for (int j = 0; j < level.getDimension().width; ++j) {
+				Actor o = level.getCell(i, j);
 				if (o instanceof PeaShooter) { // if peashooter, shoot all zombies to the right of peashooter
 					((PeaShooter) o).newTurn();
 					int i1 = i;
-					for (int index = i1; index < game.getWorld().getCurrentLevel().getDimension().height; ++index) {
-						Actor o1 = game.getWorld().getCurrentLevel().getCell(index, j);
+					for (int index = i1; index < level.getDimension().height; ++index) {
+						Actor o1 = level.getCell(index, j);
 						if (o1 instanceof Zombie) {
 							while (((PeaShooter) o).getHits() < 4) {
 
@@ -72,21 +72,20 @@ public class PeaShooter extends Actor {
 								((Zombie) o1).setHealth(((Zombie) o1).getHealth() - 100);
 								((PeaShooter) o).addHit();
 								if (((Zombie) o1).getHealth() <= 0) {
-									game.getWorld().getCurrentLevel().placeActor(null, new Point(index, j));
+									level.placeActor(null, new Point(index, j));
 								}
 
 								// if zombie dies and peashooter isn't done shooting, progress to zombies to
 								// right
 								if (((Zombie) o1).getHealth() == 0 && ((PeaShooter) o).getHits() < 4) {
-									for (int i2 = i1 + 1; i2 < game.getWorld().getCurrentLevel()
-											.getDimension().height; ++i2) {
-										Actor o2 = game.getWorld().getCurrentLevel().getCell(i2, j);
+									for (int i2 = i1 + 1; i2 < level.getDimension().height; ++i2) {
+										Actor o2 = level.getCell(i2, j);
 										if (o2 instanceof Zombie) {
 											while (((PeaShooter) o).getHits() < 4) {
 												((Zombie) o2).setHealth(((Zombie) o2).getHealth() - 100);
 												((PeaShooter) o).addHit();
 												if (((Zombie) o2).getHealth() <= 0) {
-													game.getWorld().getCurrentLevel().placeActor(null,
+													level.placeActor(null,
 															new Point(index, j));
 												}
 											}
@@ -99,8 +98,6 @@ public class PeaShooter extends Actor {
 				}
 			}
 		}
-
-		return game;
 	}
 
 	/**
