@@ -2,6 +2,7 @@ package ca.carleton.pvz.actor;
 
 import java.awt.Point;
 
+
 import ca.carleton.pvz.level.Level;
 
 /**
@@ -10,7 +11,6 @@ import ca.carleton.pvz.level.Level;
  *
  */
 public class Zombie extends Actor {
-	private PlantsVZombies game;
 	private int health;
 
 	/**
