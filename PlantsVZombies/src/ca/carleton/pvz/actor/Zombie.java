@@ -2,7 +2,7 @@ package ca.carleton.pvz.actor;
 
 import java.awt.Point;
 
-import ca.carleton.pvz.PlantsVZombies;
+import ca.carleton.pvz.level.Level;
 
 /**
  * A zombie which advances from the rightmost grid column to the left; when a
@@ -39,23 +39,18 @@ public class Zombie extends Actor {
 		this.health = health;
 	}
 
-	public PlantsVZombies moveZombies(PlantsVZombies map) {
+	public static void moveZombies(Level level) {
 
-		game = map;
-
-		for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
-			for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
-				Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
+		for (int i = 0; i < level.getDimension().height; ++i) {
+			for (int j = 0; j < level.getDimension().width; ++j) {
+				Actor o = level.getCell(i, j);
 				if (o instanceof Zombie) {
-					Actor z1 = game.getWorld().getCurrentLevel().getCell(i, j);
-					game.getWorld().getCurrentLevel().placeActor(z1, new Point(i - 1, j));
-					game.getWorld().getCurrentLevel().placeActor(null, new Point(i, j));
+					Actor z1 = level.getCell(i, j);
+					level.placeActor(z1, new Point(i - 1, j));
+					level.placeActor(null, new Point(i, j));
 				}
 			}
 		}
-
-		return game;
-
 	}
 
 	/**
