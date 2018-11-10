@@ -18,41 +18,47 @@ public class PlantsVZombies extends Application {
 
 	private World gameWorld; // stores the levels to be played
 	private CommandProcessor commandProcessor; // processes user input
+	private ActionProcessor actionProcessor;
 	private boolean gameOver;
 	private static GUIController controller;
-	
+
+	/**
+	 * The start method for the JavaFX GUI. Loads GUI from fxml file and
+	 * creates/shows a scene containing it.
+	 */
 	@Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(GUIController.class.getResource("PVZGUI.fxml"));
-        BorderPane borderPane = loader.load();
-        
-        // Get the Controller from the FXMLLoader
-        controller = loader.getController();
-        controller.setGame(this);
-        // Set data in the controller
-        //controller.setFirstName("itachi");
-        //controller.setLastName("uchiha");
-        Scene scene = new Scene(borderPane, 1030, 615);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-	
+	public void start(Stage primaryStage) throws Exception {
+		FXMLLoader loader = new FXMLLoader(GUIController.class.getResource("PVZGUI.fxml"));
+		BorderPane borderPane = loader.load();
+
+		// Get the Controller from the FXMLLoader
+		controller = loader.getController();
+		controller.setGame(this);
+		Scene scene = new Scene(borderPane, 1030, 615);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
 	public GUIController getController() {
 		return controller;
 	}
-	
+
 	/**
 	 * Constructs a new game to be played.
 	 */
 	public PlantsVZombies() {
 		gameWorld = new World();
-		//commandProcessor = new CommandProcessor(this);
+		actionProcessor = new ActionProcessor(this);
+		// commandProcessor = new CommandProcessor(this);
 		gameWorld.addLevel(new LevelOne());
 		gameOver = false;
-		//playGame();
-		
+
+		// playGame();
+
 	}
 
+	// TODO We likely won't need this playGame method anymore... as we don't
+	// constantly poll for new commands with GUI.
 	/**
 	 * Repeatedly prompts the user for input until "quit" is entered.
 	 */
@@ -93,9 +99,19 @@ public class PlantsVZombies extends Application {
 	}
 
 	/**
+	 * Get the game's action processor
+	 * 
+	 * @return the game action processor
+	 */
+	public ActionProcessor getActionProcessor() {
+		return actionProcessor;
+	}
+
+	/**
 	 * Shorthand for printing to the terminal.
 	 * 
-	 * @param s The String to be printed.
+	 * @param s
+	 *            The String to be printed.
 	 */
 	public void print(String s) {
 		System.out.println(s);
