@@ -1,9 +1,10 @@
 package ca.carleton.pvz.actor;
 
 import java.awt.Point;
-
+import java.io.InputStream;
 
 import ca.carleton.pvz.level.Level;
+import javafx.scene.image.Image;
 
 /**
  * A zombie which advances from the rightmost grid column to the left; when a
@@ -62,5 +63,10 @@ public class Zombie extends Actor {
 	public String toString() {
 		return "Z";
 	}
-
+	
+	@Override
+	public Image getSprite() {
+		InputStream stream = getClass().getResourceAsStream("zombie_tutorial.png");
+		return new Image(stream);
+	}
 }

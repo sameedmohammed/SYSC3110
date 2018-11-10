@@ -1,8 +1,10 @@
 package ca.carleton.pvz.actor;
 
 import java.awt.Point;
+import java.io.InputStream;
 
 import ca.carleton.pvz.level.Level;
+import javafx.scene.image.Image;
 
 
 /**
@@ -108,5 +110,11 @@ public class PeaShooter extends Actor {
 	@Override
 	public String toString() {
 		return "P";
+	}
+	
+	@Override
+	public Image getSprite() {
+		InputStream stream = getClass().getResourceAsStream("peashooter.png");
+		return new Image(stream);
 	}
 }

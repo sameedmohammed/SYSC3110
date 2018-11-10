@@ -1,5 +1,8 @@
 package ca.carleton.pvz;
 
+
+import javafx.application.Application;
+
 /**
  * [SYSC 3110 F18] Milestone 1
  * 
@@ -9,11 +12,9 @@ package ca.carleton.pvz;
  * @version 1.0, 29-Oct-2018
  * 
  */
-public class Application {
+public class App {
 
 	public static void main(String args[]) {
-
-		 new PlantsVZombies(); // start a new game
-
+		Application.launch(PlantsVZombies.class);
 	}
 }
