@@ -1,5 +1,9 @@
 package ca.carleton.pvz.actor;
 
+import java.io.InputStream;
+
+import javafx.scene.image.Image;
+
 /**
  * Creates a sunflower, which accumulates sun points each turn. Sun points are
  * the in-game currency which the user spends on more plants to defeat the
@@ -43,5 +47,11 @@ public class Sunflower extends Actor {
 	@Override
 	public String toString() {
 		return "S";
+	}
+	
+	@Override
+	public Image getSprite() {
+		InputStream stream = getClass().getResourceAsStream("sunflower.png");
+		return new Image(stream);
 	}
 }

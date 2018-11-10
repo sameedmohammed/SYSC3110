@@ -1,12 +1,17 @@
 package ca.carleton.pvz.actor;
 
+import java.awt.Point;
+import java.io.InputStream;
+
+import ca.carleton.pvz.level.Level;
+import javafx.scene.image.Image;
+
 /**
  * A zombie which advances from the rightmost grid column to the left; when a
  * zombie reaches the leftmost column, it's game over!
  *
  */
 public class Zombie extends Actor {
-
 	private int health;
 
 	/**
@@ -28,10 +33,25 @@ public class Zombie extends Actor {
 	/**
 	 * Sets the health of this zombie.
 	 * 
-	 * @param health The zombie's health will be assigned this value.
+	 * @param health
+	 *            The zombie's health will be assigned this value.
 	 */
 	public void setHealth(int health) {
 		this.health = health;
+	}
+
+	public static void moveZombies(Level level) {
+
+		for (int i = 0; i < level.getDimension().height; ++i) {
+			for (int j = 0; j < level.getDimension().width; ++j) {
+				Actor o = level.getCell(i, j);
+				if (o instanceof Zombie) {
+					Actor z1 = level.getCell(i, j);
+					level.placeActor(z1, new Point(i - 1, j));
+					level.placeActor(null, new Point(i, j));
+				}
+			}
+		}
 	}
 
 	/**
@@ -43,5 +63,10 @@ public class Zombie extends Actor {
 	public String toString() {
 		return "Z";
 	}
-
+	
+	@Override
+	public Image getSprite() {
+		InputStream stream = getClass().getResourceAsStream("zombie_tutorial.png");
+		return new Image(stream);
+	}
 }
