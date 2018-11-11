@@ -61,4 +61,5 @@ public class Sunflower extends Plant {
 		InputStream stream = getClass().getResourceAsStream("sunflower.png");
 		return new Image(stream);
 	}
+
 }
