@@ -43,4 +43,7 @@ public class World {
 		return levels.peek();
 	}
 
+	public void updateCurrentLevel(Level level) {
+		levels.set(0, level);
+	}
 }
