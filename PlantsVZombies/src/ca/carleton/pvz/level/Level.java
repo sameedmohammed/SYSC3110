@@ -15,14 +15,15 @@ public class Level {
 	private String levelName;
 	private Dimension levelDimension;
 	protected Actor[][] grid; // the grid in which one can place plants
-	private PlantManager plantManager; // will be utilized in future iterations
+	private PlantManager plantManager;
+	private int turn; // the current turn
 
 	/**
 	 * Initializes the fields of a level object.
 	 *
 	 * @param levelName The name of the level.
-	 * @param width     The width (number of horizontal cells) of the level.
-	 * @param height    The height (number of vertical cells) of the level.
+	 * @param width The width (number of horizontal cells) of the level.
+	 * @param height The height (number of vertical cells) of the level.
 	 */
 	public Level(String levelName, int width, int height) {
 
@@ -30,6 +31,7 @@ public class Level {
 		levelDimension = new Dimension(width, height);
 		grid = new Actor[width][height];
 		plantManager = new PlantManager();
+		turn = 0;
 
 		// initialize grid (playable area)
 		for (Actor[] row : grid) {
@@ -40,12 +42,37 @@ public class Level {
 	}
 
 	/**
+	 * Gets the current turn.
+	 *
+	 * @return The current turn.
+	 */
+	public int getTurn() {
+		return turn;
+	}
+
+	/**
+	 * Increments turn by one.
+	 */
+	public void incTurn() {
+		++turn;
+	}
+
+	/**
+	 * Gets the previous turn.
+	 *
+	 * @return The previous turn.
+	 */
+	public int getPrevTurn() {
+		return turn - 1;
+	}
+
+	/**
 	 * Get the cell located at the given coordinates.
 	 *
 	 * @param x The x-coordinate (column number).
 	 * @param y The y-coordinate (row number).
-	 * @return The cell located at the given coordinates, or null if the coordinates
-	 *         are invalid.
+	 * @return The cell located at the given coordinates, or null if the
+	 *         coordinates are invalid.
 	 */
 	public Actor getCell(int x, int y) {
 		if (isPointValid(new Point(x, y))) {

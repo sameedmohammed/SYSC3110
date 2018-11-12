@@ -35,7 +35,7 @@ public class World {
 	}
 
 	/**
-	 * Get the current level.
+	 * Gets the current level.
 	 *
 	 * @return The current level.
 	 */

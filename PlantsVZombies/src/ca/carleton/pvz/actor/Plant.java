@@ -6,8 +6,7 @@ package ca.carleton.pvz.actor;
  */
 public class Plant extends Actor {
 
-	/** This plant's cooldown value. */
-	private int cooldown;
+	private int cooldown; // this plant's cooldown, in turns
 
 	/**
 	 * Constructs a new plant object with the specified cooldown.
