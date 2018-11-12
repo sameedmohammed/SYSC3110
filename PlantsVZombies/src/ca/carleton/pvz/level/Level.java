@@ -2,6 +2,7 @@ package ca.carleton.pvz.level;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.ArrayList;
 
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.PlantManager;
@@ -17,6 +18,7 @@ public class Level {
 	protected Actor[][] grid; // the grid in which one can place plants
 	private PlantManager plantManager;
 	private int turn; // the current turn
+	private ArrayList<Wave> waves; // the zombie waves comprising this level
 
 	/**
 	 * Initializes the fields of a level object.
@@ -32,6 +34,7 @@ public class Level {
 		grid = new Actor[width][height];
 		plantManager = new PlantManager();
 		turn = 0;
+		waves = new ArrayList<>();
 
 		// initialize grid (playable area)
 		for (Actor[] row : grid) {
@@ -39,6 +42,15 @@ public class Level {
 				cell = null;
 			}
 		}
+	}
+
+	/**
+	 * Adds the given wave to this level's collection of waves.
+	 *
+	 * @param wave The wave to be added to this level's collection of waves.
+	 */
+	public void addWave(Wave wave) {
+		waves.add(wave);
 	}
 
 	/**
