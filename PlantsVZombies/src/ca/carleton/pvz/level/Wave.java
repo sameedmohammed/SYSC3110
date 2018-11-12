@@ -11,11 +11,10 @@ import ca.carleton.pvz.actor.Zombie;
  *
  */
 public class Wave {
-
+	
+	private static Random r;
 	private int remainingZombies;
 	private int waveNumber;
-	private PlantsVZombies game;
-	private Random r;
 
 	/**
 	 * Creates a new wave comprising the specified number of zombies.
@@ -26,6 +25,7 @@ public class Wave {
 	public Wave(int waveNumber, int numZombies) {
 		this.waveNumber = waveNumber;
 		remainingZombies = numZombies;
+		r = new Random();
 	}
 
 	/**
@@ -34,13 +34,11 @@ public class Wave {
 	 * @param map The game map to be modified when zombies are spawning.
 	 * @return The resulting game map after new zombies have spawned.
 	 */
-	public PlantsVZombies spawnZombies(PlantsVZombies map) {
-		game = map;
-		r = new Random();
+	public static Level spawnZombieOnLevel(Level level) {
 		int randomRow = r.nextInt(5);
 		Zombie zombie = new Zombie();
-		game.getWorld().getCurrentLevel().placeActor(zombie, new Point(4, randomRow));
-		return game;
+		level.placeActor(zombie, new Point(4, randomRow));
+		return level;
 	}
 
 	/**
