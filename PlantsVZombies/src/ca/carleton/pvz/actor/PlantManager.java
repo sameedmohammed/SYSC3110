@@ -1,13 +1,20 @@
 package ca.carleton.pvz.actor;
 
 /**
- * Handles the creation and placement of Plant objects. (Not yet utilized, but
- * leaving here for future iterations.)
- * 
+ * Manages plant cooldowns. All cooldowns are global and therefore static.
+ *
  */
-public class PlantManager {
+public final class PlantManager {
 
-	public static final int DEFAULT_TIMER = 10;
-	public static final int SUNFLOWER_TIMER = 10;
+	public static boolean sunflowerPurchaseIsOnCooldown;
+	public static boolean peashooterPurchaseIsOnCooldown;
+
+	/**
+	 * Resets all plant cooldowns (for starting a new level).
+	 */
+	public static void resetCooldowns() {
+		sunflowerPurchaseIsOnCooldown = false;
+		peashooterPurchaseIsOnCooldown = false;
+	}
 
 }
