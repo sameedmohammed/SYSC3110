@@ -91,19 +91,19 @@ public class ActionProcessor {
 		if (wave.getWaveNumber() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn
 																						// == 3 for first wave
 			game.print(Presets.ZOMBIES_SPAWNING);
-			game = wave.spawnZombies(game);
+			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
 
 		if (wave.getWaveNumber() == 2 && turn >= 3 && wave.getRemainingZombies() > 0) {
 			game.print(Presets.ZOMBIES_SPAWNING);
-			game = wave.spawnZombies(game);
+			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
 
 		if (wave.getWaveNumber() == 3 && turn >= 3 && wave.getRemainingZombies() > 0) {
 			game.print(Presets.ZOMBIES_SPAWNING);
-			game = wave.spawnZombies(game);
+			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
 
