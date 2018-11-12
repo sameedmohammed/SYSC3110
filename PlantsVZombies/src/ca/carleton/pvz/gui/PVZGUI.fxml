@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -14,95 +15,58 @@
                <children>
                   <VBox prefHeight="200.0" prefWidth="182.0">
                      <children>
-                        <TextField text="Sunflower Cooldown">
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="149.0" text="Plant Type" wrapText="true">
                            <font>
-                              <Font name="System Bold" size="13.0" />
+                              <Font name="Agency FB" size="16.0" />
                            </font>
-                        </TextField>
-                        <TextField prefHeight="25.0" prefWidth="133.0" text="Peashooter Cooldown">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField>
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField>
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField>
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField>
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField>
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField>
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </TextField>
+                        </Label>
+                        <Group fx:id="plantGroup">
+                           <children>
+                              <Button fx:id="sunflowerButton" layoutX="9.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Sunflower">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="peashooterButton" layoutX="8.0" layoutY="29.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="149.0" text="Peashooter">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="8.0" layoutY="57.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="149.0" text="coming soon">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Group>
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <TextField id="sunflower-cooldown" fx:id="sunflowerCooldown" alignment="CENTER_RIGHT" text="2">
+                        <Label alignment="CENTER" prefHeight="32.0" prefWidth="66.0" text="Cooldown" />
+                        <Label fx:id="sunflowerCooldown" alignment="CENTER" prefHeight="27.0" prefWidth="66.0" text="0">
                            <font>
-                              <Font size="13.0" />
+                              <Font name="Consolas" size="12.0" />
                            </font>
-                        </TextField>
-                        <TextField id="peashooter-cooldown" fx:id="peashooterCooldown" alignment="CENTER_RIGHT" text="1">
+                        </Label>
+                        <Label fx:id="peashooterCooldown" alignment="CENTER" prefHeight="29.0" prefWidth="66.0" text="0">
                            <font>
-                              <Font size="13.0" />
+                              <Font name="Consolas" size="12.0" />
                            </font>
-                        </TextField>
-                        <TextField alignment="CENTER_RIGHT">
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="32.0" prefWidth="66.0" text="0">
                            <font>
-                              <Font size="13.0" />
+                              <Font name="Consolas" size="12.0" />
                            </font>
-                        </TextField>
-                        <TextField alignment="CENTER_RIGHT">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField alignment="CENTER_RIGHT">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField alignment="CENTER_RIGHT">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField alignment="CENTER_RIGHT">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </TextField>
-                        <TextField alignment="CENTER_RIGHT">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </TextField>
+                        </Label>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <Button fx:id="nextTurnButton" mnemonicParsing="false" prefHeight="85.0" prefWidth="217.0" text="Next Turn" />
+            <Button fx:id="nextTurnButton" mnemonicParsing="false" prefHeight="85.0" prefWidth="217.0" text="Next Turn">
+               <font>
+                  <Font name="Agency FB" size="30.0" />
+               </font></Button>
             <Button mnemonicParsing="false" prefHeight="89.0" prefWidth="216.0" text="Button" />
             <Button mnemonicParsing="false" prefHeight="92.0" prefWidth="238.0" text="Button" />
             <Button mnemonicParsing="false" prefHeight="94.0" prefWidth="286.0" text="Button" />
@@ -114,13 +78,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="Game">
             <items>
-              <MenuItem mnemonicParsing="false" text="Restart" />
-                  <MenuItem mnemonicParsing="false" text="Quit" />
+              <MenuItem fx:id="restartButton" mnemonicParsing="false" text="Restart" />
+                  <MenuItem fx:id="quitButton" mnemonicParsing="false" text="Quit" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="aboutButton" mnemonicParsing="false" text="About" />
             </items>
           </Menu>
         </menus>
@@ -143,7 +107,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="2" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.rowIndex="3" />
@@ -158,9 +122,9 @@
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="0" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="0" />
