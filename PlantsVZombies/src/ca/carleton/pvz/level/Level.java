@@ -45,12 +45,17 @@ public class Level {
 	}
 
 	/**
-	 * Adds the given wave to this level's collection of waves.
+	 * Adds the given wave(s) to this level's collection of waves. This method
+	 * is needed for level subclasses to be able to augment the waves field.
 	 *
-	 * @param wave The wave to be added to this level's collection of waves.
+	 * @param waves The wave(s) to be added to this level's collection of waves.
 	 */
-	public void addWave(Wave wave) {
-		waves.add(wave);
+	public void addWaves(Wave... waves) {
+		if (waves.length > 0) {
+			for (Wave wave : waves) {
+				this.waves.add(wave);
+			}
+		}
 	}
 
 	/**
